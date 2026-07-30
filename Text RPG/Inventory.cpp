@@ -1,100 +1,65 @@
-#include "Inventory.h"
-#include <vector>
+#include<algorithm>
 #include <iostream>
+#include <string>
+#include <vector>
+
+#include "Inventory.h"
 
 using namespace std;
 
-Inventory::Inventory()
+template<typename T>
+Inventory<T>::Inventory(int Max_Inventory_Size)
 {
-	HPPotionCount = 5;
-	MPPotionCount = 5;
-}		//생성자 초기화
-
-void Inventory::UseItem(int itemType)
+    _Max_Inventory_Size = Max_Inventory_Size;
+    _Current_Quantity_Of_Items = 0;
+    _Inventory_Items = new T[_Max_Inventory_Size];
+}
+template<typename T>
+Inventory<T>::Inventory(const Inventory<T>& other) //기존 객체와 같은 상태를 가진 새 객체가 필요할 때 복사 생성자가 쓰임
 {
-	if (itemType == 1 && HPPotionCount > 0)
-	{
-		HPPotionCount--;
-		cout << "HP가 20 증가했습니다. (HP 포션 차감 - 남은 포션 " << HPPotionCount << "개)" << endl;
-	}
-	else if (itemType == 2 && MPPotionCount > 0)
-	{
-		MPPotionCount--;
-		cout << "MP가 20 증가했습니다. (MP 포션 차감 - 남은 포션 " << MPPotionCount << "개)" << endl;
-	}
-
-	else if (itemType == 1 && HPPotionCount <= 0)
-	{
-		cout << "HP 포션 부족" << endl;
-	}
-
-	else if (itemType == 2 && MPPotionCount <= 0)
-	{
-		cout << "MP 포션 부족" << endl;
-	}
+    _Max_Inventory_Size = other._Max_Inventory_Size;
+    _Current_Quantity_Of_Items = other._Current_Quantity_Of_Items;
+    _Max_Capacity = other._Max_Capacity;
+    _Inventory_Items = new T[_Max_Inventory_Size];
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        _Inventory_Items[i] = other._Inventory_Items[i];
+    }
 }
 
-void Inventory::AddItem(int itemType)
+template<typename T>
+int Inventory<T>::Get_Total_Weight() const // 인벤토리 총 무게 함수
 {
-	if (itemType == 1)
-	{
-		HPPotionCount++;
-		cout << "HP 포션을 획득했습니다. (현재 HP 포션 " 
-		<< HPPotionCount << "개)" << endl;
-	}
-	else if (itemType == 2)
-	{
-		MPPotionCount++;
-		cout << "MP 포션을 획득했습니다. (현재 MP 포션 "
-		<< MPPotionCount << "개)" << endl;
-	}
-	else
-	{
-		cout << "잘못된 아이템 타입입니다." << endl;
-	}
+    int Total_Weight = 0;
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        Total_Weight += _Inventory_Items[i].Item_Weight * _Inventory_Items[i].Item_Count;
+    }
+    return Total_Weight;
 }
-
-void Inventory::PrintItem(int itemType)
+template<typename T>
+T* Inventory<T>::GetItemByIndex(int index)//인벤토리 Index  가져오기
 {
-	if (itemType == 1)
-	{
-		cout << "현재 HP 포션 " << HPPotionCount << "개" << endl;
-	}
-	else if (itemType == 2)
-	{
-		cout << "현재 MP 포션 " << MPPotionCount << "개" << endl;
-	}
-	else
-	{
-		cout << "현재 HP 포션 " << HPPotionCount << "개" << endl;
-		cout << "현재 MP 포션 " << MPPotionCount << "개" << endl;
-	}
+    if (index < 0 || index >= _Current_Quantity_Of_Items)
+    {
+        return nullptr;
+    }
+    return &_Inventory_Items[index];
 }
-
-void Inventory::AddItem(const Item& item)
+template <typename T>
+void Inventory<T>::Use_Item_In_Battle(Player& player)
 {
-	inventory.push_back(item);
-
-	std::cout << "  -> 인벤토리에 저장되었습니다." << std::endl;
+    if (_Current_Quantity_Of_Items == 0)
+    {
+         cout << "사용할 아이템이 없다!" << endl;
+         return;
+    }
 }
-
-void Inventory::PrintInventory() const
+template<typename T>
+Inventory<T>::~Inventory()//인벤토리 소멸자
 {
-	std::cout << "[ 인벤토리 (" << inventory.size() << "/10) ]" << std::endl;
-
-	if (inventory.empty())
-	{
-		std::cout << "인벤토리가 비어 있습니다." << std::endl;
-		return;
-	}
-
-	int index = 1;
-
-	for (const Item& item : inventory)
-	{
-		std::cout << index << ". ";
-		item.PrintInfo();
-
-		index++;
-	}
+    delete[] _Inventory_Items;
+    _Inventory_Items = nullptr;
 }
+template<typename T>
+template class Inventory<Item>; // 명시적 인스턴스화
