@@ -49,10 +49,9 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 {
 	_monster_Type = monster_Type;
 
-	// 일반 몬스터는 MP를 사용하지 않음
 	_stat[MONSTER_MP] = 0;
 
-	// TODO: 아이템 담당 조원의 코드와 연결한 후 수정하기
+	// 아이템관련 : 윤재님이랑 연결한 후 수정하기
 	_drop_Item_Name = "보상 미정";
 	_drop_Item_Price = 0;
 
