@@ -62,6 +62,8 @@ void Battle(Player* player, Monster& monster, Inventory& inventory)
 
         cout << "--- 몬스터 턴 ---" << endl;
 
+        monster.attack(player);
+
         int beforePlayerHP = player->getHp();
         int monsterPower = monster.getPower();
         int playerDefence = player->getDefence();
