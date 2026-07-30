@@ -3,34 +3,97 @@
 
 class Player;
 
+enum class Chapter_Type
+{
+    VARIABLE_CONDITION_FOREST,
+    ARRAY_LOOP_OCEAN,
+    FUNCTION_RUINS,
+    POINTER_MEMORY_GRAVEYARD,
+    OBJECT_STL_FACTORY,
+    ALL_CHAPTER_CLEARED
+};
+
+enum class Monster_Type
+{
+    INT_SLIME,
+    BOOL_MUSHROOM,
+    IF_GOBLIN,
+
+    ARRAY_JELLYFISH,
+    FOR_SHARK,
+    WHILE_WHALE,
+
+    PARAMETER_GIANT_FLY,
+    RETURN_GARGOYLE,
+    FUNCTION_MAGE,
+
+    POINTER_GHOST,
+    NULL_BANSHEE,
+    MEMORY_REAPER,
+
+    CLASS_MACHINE_DOLL,
+    INHERITANCE_CHIMERA,
+    VECTOR_DRONE
+};
+
+enum Monster_Stat_Index
+{
+    MONSTER_HP,
+    MONSTER_MP,
+    MONSTER_POWER,
+    MONSTER_DEFENCE,
+    MONSTER_SPEED,
+    MONSTER_STAT_COUNT
+};
+
 class Monster
 {
-private:
-    std::string monstername;
-    int monsterhp;
-    int monsterpower;
-    int monsterdefence;
-    std::string dropitemname;
-    int dropitemprice;
-
 public:
+    Monster();
+
+    explicit Monster(Monster_Type monster_Type);
+
     Monster
     (
-        std::string monstername,
-        int monsterhp,
-        int monsterpower,
-        int monsterdefence,
-        std::string dropitemname,
-        int dropitemprice
+        std::string monster_Name,
+        int monster_HP,
+        int monster_Power,
+        int monster_Defence,
+        std::string drop_Item_Name,
+        int drop_Item_Price
     );
 
-    std::string getName();
-    int getHP();
-    int getPower();
-    int getDefence();
-    std::string getDropItemName();
-    int getDropItemPrice();
+    std::string getName() const;
+
+    int getHP() const;
+    int getPower() const;
+    int getDefence() const;;
+    int getSpeed() const;
+    std::string getDropItemName() const;
+    int getDropItemPrice() const;
+
+    Monster_Type getMonsterType() const;
+    Chapter_Type getChapterType() const;
+
+    std::string getAttackMessage() const;
 
     void setHP(int hp);
-    void attack(Player* player);
+    void attack(Player* player)const;
+    void Print_Monster_Info() const;
+    void Print_Attack_Message() const;
+
+private:
+    void Initialize_Monster(Monster_Type monster_Type);
+
+    Monster_Type _monster_Type;
+    Chapter_Type _chapter_Type;
+
+    std::string _monster_Name;
+    int _stat[MONSTER_STAT_COUNT];
+
+    std::string _attack_Message;
+
+    // 아이템관련 : 윤재님이랑 연결한 후 수정하기
+    std::string _drop_Item_Name;
+    int _drop_Item_Price;
 };
