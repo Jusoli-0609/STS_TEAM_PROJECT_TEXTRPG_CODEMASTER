@@ -4,4 +4,4 @@
 #include "Monster.h"
 #include "Inventory.h"
 
-void Battle(Player* player, Monster& monster, Inventory& inventory);
+void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);

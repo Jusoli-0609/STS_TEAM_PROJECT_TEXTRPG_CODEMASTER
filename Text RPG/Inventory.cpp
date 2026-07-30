@@ -8,9 +8,10 @@
 using namespace std;
 
 template<typename T>
-Inventory<T>::Inventory(int Max_Inventory_Size)
+Inventory<T>::Inventory(int Max_Inventory_Size,int Max_Capacity)//기본 생성자
 {
     _Max_Inventory_Size = Max_Inventory_Size;
+    _Max_Capacity=Max_Capacity;
     _Current_Quantity_Of_Items = 0;
     _Inventory_Items = new T[_Max_Inventory_Size];
 }
@@ -26,9 +27,26 @@ Inventory<T>::Inventory(const Inventory<T>& other) //기존 객체와 같은 상태를 가�
         _Inventory_Items[i] = other._Inventory_Items[i];
     }
 }
-
 template<typename T>
-int Inventory<T>::Get_Total_Weight() const // 인벤토리 총 무게 함수
+Inventory<T>& Inventory<T>:: operator=(const Inventory& other)//대입 연산자, 다른 Inventory<T> 객체를 받아서, 현재 객체에 복사하고, 현재 객체 자신을 반환
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+    delete[] _Inventory_Items;
+    _Max_Inventory_Size = other._Max_Inventory_Size;
+    _Max_Capacity = other._Max_Capacity;
+    _Current_Quantity_Of_Items = other._Current_Quantity_Of_Items;
+    _Inventory_Items = new T[_Max_Inventory_Size];
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        _Inventory_Items[i] = _Inventory_Items[i];
+    }
+    return *this;
+}
+template<typename T>
+int Inventory<T>::Get_Total_Weight()const // 인벤토리 총 무게 함수
 {
     int Total_Weight = 0;
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
@@ -38,13 +56,18 @@ int Inventory<T>::Get_Total_Weight() const // 인벤토리 총 무게 함수
     return Total_Weight;
 }
 template<typename T>
-T* Inventory<T>::GetItemByIndex(int index)//인벤토리 Index  가져오기
+T* Inventory<T>::Get_Item_By_Index(int index)//인벤토리 Index  가져오기
 {
     if (index < 0 || index >= _Current_Quantity_Of_Items)
     {
         return nullptr;
     }
     return &_Inventory_Items[index];
+}
+template<typename T>
+int Inventory<T>::GetSize()const//인벤토리 사이즈 가져오기
+{
+    reutrn _Current_Quantity_Of_Items;
 }
 template <typename T>
 void Inventory<T>::Use_Item_In_Battle(Player& player)
@@ -61,5 +84,5 @@ Inventory<T>::~Inventory()//인벤토리 소멸자
     delete[] _Inventory_Items;
     _Inventory_Items = nullptr;
 }
-template<typename T>
+
 template class Inventory<Item>; // 명시적 인스턴스화
