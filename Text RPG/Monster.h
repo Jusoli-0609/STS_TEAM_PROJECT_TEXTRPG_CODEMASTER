@@ -70,6 +70,7 @@ public:
     int getDefence() const;;
     int getSpeed() const;
     int getEvasion() const;
+    int getAccuracy() const;
     std::string getDropItemName() const;
     int getDropItemPrice() const;
 
@@ -92,6 +93,7 @@ private:
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
     int _evasion;
+    int _accuracy;
 
     std::string _attack_Message;
 

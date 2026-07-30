@@ -9,6 +9,7 @@ Monster::Monster()
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name("int 슬라임"),
 	_evasion(80),
+	_accuracy(20),
 	_attack_Message("int 슬라임이 몸을 튕겨 공격했다!!!"),
 	_drop_Item_Name("보상 미정"),
 	_drop_Item_Price(0)
@@ -38,6 +39,7 @@ Monster::Monster
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name(monster_Name),
 	_evasion(80),
+	_accuracy(80),
 	_attack_Message(monster_Name + "이(가) 공격했다!!!"),
 	_drop_Item_Name(drop_Item_Name),
 	_drop_Item_Price(drop_Item_Price)
@@ -57,6 +59,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_stat[MONSTER_SPEED] = 3;
 
 	_evasion = 80;
+	_accuracy = 20;
 
 	// 아이템관련 : 윤재님이랑 연결한 후 수정하기
 	_drop_Item_Name = "보상 미정";
@@ -387,6 +390,11 @@ int Monster::getEvasion() const
 	return _evasion;
 }
 
+int Monster::getAccuracy() const
+{
+	return _accuracy;
+}
+
 string Monster::getDropItemName() const
 {
 	return _drop_Item_Name;
@@ -457,6 +465,11 @@ void Monster::Print_Monster_Info() const
 
 	cout << "회피율: "
 		<< _evasion
+		<< "%"
+		<< endl;
+
+	cout << "명중률: "
+		<< _accuracy
 		<< "%"
 		<< endl;
 

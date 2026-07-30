@@ -31,7 +31,7 @@ void Battle
 			static_cast<unsigned int>
 			(
 				time(nullptr)
-			)
+				)
 		);
 
 		is_Random_Seeded = true;
@@ -44,10 +44,10 @@ void Battle
 		<< endl;
 
 	while
-	(
-		player->getHp() > 0
-		&& monster.getHP() > 0
-	)
+		(
+			player->getHp() > 0
+			&& monster.getHP() > 0
+			)
 	{
 		// 플레이어 턴
 		cout << endl;
@@ -162,47 +162,84 @@ void Battle
 		cout << "--- 몬스터 턴 ---"
 			<< endl;
 
-		monster.attack(player);
+		int accuracy_Roll =
+			rand() % 100 + 1;
 
-		int before_Player_HP =
-			player->getHp();
+		bool is_Monster_Hit =
+			accuracy_Roll
+			<= monster.getAccuracy();
 
-		int monster_Power =
-			monster.getPower();
-
-		int player_Defence =
-			player->getDefence();
-
-		int monster_Damage =
-			monster_Power
-			- player_Defence;
-
-		if (monster_Damage <= 0)
+		if (!is_Monster_Hit)
 		{
-			monster_Damage = 1;
+			monster.attack(player);
+
+			cout << monster.getName()
+				<< "의 공격이 빗나갔습니다!"
+				<< endl;
+
+			cout << "명중 판정값: "
+				<< accuracy_Roll
+				<< " / 명중률: "
+				<< monster.getAccuracy()
+				<< "%"
+				<< endl;
 		}
-
-		player->setHp
-		(
-			before_Player_HP
-			- monster_Damage
-		);
-
-		cout << "플레이어 HP: "
-			<< before_Player_HP
-			<< " -> "
-			<< player->getHp()
-			<< endl;
-
-		if (player->getHp() <= 0)
+		else
 		{
-			cout << "플레이어가 쓰러졌습니다."
+			monster.attack(player);
+
+			cout << "명중 판정값: "
+				<< accuracy_Roll
+				<< " / 명중률: "
+				<< monster.getAccuracy()
+				<< "%"
 				<< endl;
 
-			cout << "★ 전투 패배!"
+			int before_Player_HP =
+				player->getHp();
+
+			int monster_Power =
+				monster.getPower();
+
+			int player_Defence =
+				player->getDefence();
+
+			int monster_Damage =
+				monster_Power
+				- player_Defence;
+
+			if (monster_Damage <= 0)
+			{
+				monster_Damage = 1;
+			}
+
+			player->setHp
+			(
+				before_Player_HP
+				- monster_Damage
+			);
+
+			cout << "플레이어가 "
+				<< monster_Damage
+				<< " 데미지를 받았습니다!"
 				<< endl;
 
-			break;
+			cout << "플레이어 HP: "
+				<< before_Player_HP
+				<< " -> "
+				<< player->getHp()
+				<< endl;
+
+			if (player->getHp() <= 0)
+			{
+				cout << "플레이어가 쓰러졌습니다."
+					<< endl;
+
+				cout << "★ 전투 패배!"
+					<< endl;
+
+				break;
+			}
 		}
 	}
 }
