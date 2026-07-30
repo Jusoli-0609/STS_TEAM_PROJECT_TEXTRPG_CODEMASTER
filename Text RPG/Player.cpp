@@ -1,97 +1,173 @@
-#include "Player.h"
 #include <iostream>
+#include <string>
 
+#include "Player.h"
+#include "Level_Up.h"
+#include "Player_Stat_index.h"
 
 using namespace std;
 
-void PrintLine();
-
-Player::Player(std::string name, int hp, int mp, int power, int defence)
+Player::Player(const std::string& name, const int stat[])
+    : name(name),
+    job("ë¯¸ì„ íƒ"),
+    hp(stat[P_Hp]),
+    mp(stat[P_Mp]),
+    atk(stat[P_ATK]),
+    ap(stat[P_AP]),
+    def(stat[P_DEF]),
+    sne(stat[P_SNE]),
+    agi(stat[P_AGI]),
+    level(1),
+    maxexp(100),
+    exp(0)
 {
-	level = 1;
-	this->name = name;
-	this->hp = hp;
-	this->mp = mp;
-	this->power = power;
-	this->defence = defence;
-}		//»ý¼ºÀÚ, Á÷¾÷Àº ÀÚ½Ä Å¬·¡½º¿¡¼­ ÃÊ±âÈ­
-
-string Player::getName()
-{
-	return name;
 }
 
-string Player::getJob()
+void Player::Print_Status() const
 {
-	return job;
+    cout << "===========================================\n";
+    cout << name << "ì˜ í˜„ìž¬ ëŠ¥ë ¥ì¹˜\n";
+    cout << "\nHP:  " << hp;
+    cout << "\nMP:  " << mp;
+    cout << "\nATK: " << atk;
+    cout << "\nAP:  " << ap;
+    cout << "\nDEF: " << def;
+    cout << "\nSNE: " << sne;
+    cout << "\nAGI: " << agi;
+    cout << "\nLevel: " << level;
+    cout << "\nEXP: " << exp << "/" << maxexp;
+    cout << "\n\n===========================================\n";
 }
 
-int Player::getHp()
+void Player::Gain_Exp(int amount)
 {
-	return hp;
+    exp += amount;
+
+    cout << name << "ì´(ê°€) " << amount
+        << " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤.\n";
+
+    cout << "í˜„ìž¬ ê²½í—˜ì¹˜: "
+        << exp << "/" << maxexp << endl;
+
+    if (exp >= maxexp)
+    {
+        Level_Up();
+    }
 }
 
-int Player::getMp()
+void Player::Level_Up()
 {
-	return mp;
+    if (exp < maxexp)
+    {
+        return;
+    }
+
+    exp -= maxexp;
+
+    ::Level_Up::levelup(this);
+
+    cout << name << "ì´(ê°€) ë ˆë²¨ì—…!\n";
+    cout << "í˜„ìž¬ ë ˆë²¨: " << level << endl;
+
+    Print_Status();
 }
 
-int Player::getPower()
+std::string Player::Get_Name() const
 {
-	return power;
+    return name;
 }
 
-int Player::getDefence()
+std::string Player::Get_Job() const
 {
-	return defence;
+    return job;
 }
 
-int Player::getLevel()
+int Player::Get_Level() const
 {
-	return level;
+    return level;
 }
 
-
-
-void Player::setName(std::string name)
+int Player::Get_Hp() const
 {
-	this->name = name;
+    return hp;
 }
 
-void Player::setJob(std::string job)
+int Player::Get_Mp() const
 {
-	this->job = job;
+    return mp;
 }
 
-void Player::setHp(int hp)
+int Player::Get_ATK() const
 {
-	this->hp = hp;
+    return atk;
 }
 
-void Player::setMp(int mp)
+int Player::Get_DEF() const
 {
-	this->mp = mp;
+    return def;
 }
 
-void Player::setPower(int power)
+int Player::Get_AP() const
 {
-	this->power = power;
+    return ap;
 }
 
-void Player::setDefence(int defence)
+int Player::Get_SNE() const
 {
-	this->defence = defence;
+    return sne;
 }
 
-void Player::printPlayerStatus()
+int Player::Get_AGI() const
 {
-	PrintLine();
-	cout << "´Ð³×ÀÓ: " << name << "  |  Á÷¾÷: " << job << "  |  Lv." << level << endl;
-	cout << "HP: " << hp << "  |  MP: " << mp << "  |  °ø°Ý·Â: " << power << "  |  ¹æ¾î·Â: " << defence << endl;
-	PrintLine();
+    return agi;
 }
 
-void Player::levelUp()
+int Player::Get_Exp() const
 {
-	level++;
+    return exp;
+}
+
+void Player::Set_Hp(int newHp)
+{
+    hp = newHp;
+}
+
+void Player::Set_Mp(int newMp)
+{
+    mp = newMp;
+}
+
+void Player::Set_ATK(int newATK)
+{
+    atk = newATK;
+}
+
+void Player::Set_DEF(int newDEF)
+{
+    def = newDEF;
+}
+
+void Player::Set_AP(int newAP)
+{
+    ap = newAP;
+}
+
+void Player::Set_SNE(int newSNE)
+{
+    sne = newSNE;
+}
+
+void Player::Set_AGI(int newAGI)
+{
+    agi = newAGI;
+}
+
+void Player::Set_Level(int newLevel)
+{
+    level = newLevel;
+}
+
+void Player::Set_Exp(int newExp)
+{
+    exp = newExp;
 }

@@ -2,8 +2,9 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "Monster.h"
-#include "Battle.h"
+#include "Battle_System.h"
 #include "AlchemyWorkshop.h"
+#include "DungeonManager.h"
 #include <iostream>
 #include <string>
 
@@ -12,43 +13,6 @@ using namespace std;
 void PrintLine()
 {
 	cout << string(50, '=') << endl;
-}
-
-void OpenDungeon(Player* player, Inventory& inventory)
-{
-    int dungeonChoice = -1;
-
-    cout << "===== 던전 입장 =====" << endl;
-    cout << "1. 슬라임 숲" << endl;
-    cout << "2. 고블린 동굴" << endl;
-    cout << "0. 메인 메뉴로 돌아가기" << endl;
-    cout << "선택: ";
-
-    cin >> dungeonChoice;
-
-    if (dungeonChoice == 1)
-    {
-        Monster slime("슬라임", 50, 60, 20, "슬라임 젤리", 20);
-
-        Battle(player, slime, inventory);
-    }
-
-    else if (dungeonChoice == 2)
-    {
-        Monster goblin("고블린", 80, 50, 60, "고블린의 이빨", 40);
-
-        Battle(player, goblin, inventory);
-    }
-    
-    else if (dungeonChoice == 0)
-    {
-        cout << "메인 메뉴로 돌아갑니다." << endl;
-    }
-    
-    else
-    {
-        cout << "잘못된 선택입니다." << endl;
-    }
 }
 
 void OpenInventory(const Inventory& inventory)
@@ -109,6 +73,7 @@ void OpenAlchemyWorkshop(AlchemyWorkshop& workshop)
 
 int main()
 {
+    Set_Console_Size();
     string name;
     const int SIZE = 4;
     int stat[SIZE] = { 0 };
@@ -123,6 +88,8 @@ int main()
     Inventory inventory;
     AlchemyWorkshop workshop;
 
+    Dungeon_Manager dungeon_Manager;
+
     cout << "* HP 포션 5개, MP 포션 5개가 기본 지급되었습니다." << endl;
     PrintLine();
 
@@ -134,8 +101,10 @@ int main()
     PrintLine();
 
     int choice = -1;
+    bool is_Game_Running = true;
 
-    while (true)
+
+    while (is_Game_Running)
     {
         PrintLine();
         cout << "===== 메인 메뉴 =====" << endl;
@@ -147,30 +116,63 @@ int main()
 
         cin >> choice;
 
-        if (choice == 1)
+        switch (choice)
         {
-            OpenDungeon(player, inventory);
-        }
+        case 1:
+        {
+            dungeon_Manager.Open_Dungeon
+            (
+                player,
+                inventory
+            );
 
-        else if (choice == 2)
-        {
-            OpenInventory(inventory);
-        }
+            if
+                (
+                    player != nullptr
+                    && player->getHp() <= 0
+                    )
+            {
+                cout << "플레이어가 쓰러져 "
+                    << "게임을 종료합니다."
+                    << endl;
 
-        else if (choice == 3)
-        {
-            OpenAlchemyWorkshop(workshop);
-        }
+                is_Game_Running = false;
+            }
 
-        else if (choice == 0)
-        {
-            cout << "게임을 종료합니다." << endl;
             break;
         }
 
-        else
+        case 2:
         {
-            cout << "잘못된 입력입니다." << endl;
+            OpenInventory(inventory);
+
+            break;
+        }
+
+        case 3:
+        {
+            OpenAlchemyWorkshop(workshop);
+
+            break;
+        }
+
+        case 0:
+        {
+            cout << "게임을 종료합니다."
+                << endl;
+
+            is_Game_Running = false;
+
+            break;
+        }
+
+        default:
+        {
+            cout << "잘못된 입력입니다."
+                << endl;
+
+            break;
+        }
         }
     }
 

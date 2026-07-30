@@ -13,17 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="헤더 파일\Potion">
-      <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\Job">
       <UniqueIdentifier>{20f10a61-dcdc-4978-b7ee-cd1a699291a4}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Job">
       <UniqueIdentifier>{dadad780-12bf-4d4f-970b-17e36d1dfcd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Potion">
+    <Filter Include="소스 파일\Item">
       <UniqueIdentifier>{8988196a-4e5c-4e99-b320-05500c7e7f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Item">
+      <UniqueIdentifier>{2ff36e5c-cac5-435e-b9d1-884c08bd12bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +39,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Battle.cpp">
+    <ClCompile Include="Battle_System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Archer.cpp">
@@ -54,14 +54,20 @@
     <ClCompile Include="Warrior.cpp">
       <Filter>소스 파일\Job</Filter>
     </ClCompile>
-    <ClCompile Include="AlchemyWorkshop.cpp">
-      <Filter>소스 파일\Potion</Filter>
+    <ClCompile Include="Craft_Item.cpp">
+      <Filter>소스 파일\Item</Filter>
     </ClCompile>
-    <ClCompile Include="PotionRecipe.cpp">
-      <Filter>소스 파일\Potion</Filter>
+    <ClCompile Include="All_Recipes.cpp">
+      <Filter>소스 파일\Item</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>소스 파일\Potion</Filter>
+      <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,14 +83,14 @@
     <ClInclude Include="Monster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Battle.h">
+    <ClInclude Include="Battle_System.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PotionRecipe.h">
-      <Filter>헤더 파일\Potion</Filter>
+    <ClInclude Include="All_Recipes.h">
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
-    <ClInclude Include="AlchemyWorkshop.h">
-      <Filter>헤더 파일\Potion</Filter>
+    <ClInclude Include="Craft_Item.h">
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="Warrior.h">
       <Filter>헤더 파일\Job</Filter>
@@ -99,10 +105,13 @@
       <Filter>헤더 파일\Job</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>헤더 파일\Potion</Filter>
+      <Filter>헤더 파일\Item</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
-      <Filter>헤더 파일\Potion</Filter>
+      <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
