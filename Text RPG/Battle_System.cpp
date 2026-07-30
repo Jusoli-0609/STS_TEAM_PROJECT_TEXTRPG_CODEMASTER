@@ -38,7 +38,7 @@ void Battle(Player* player, Monster& monster, Inventory& inventory)
 
 void Show_Battle_Menu()
 {
-    // 나중에 UI 디자인 정해지면 변경예정
+    // 나중에 UI 디자인 정해지면 변경 (철거 예정)
 
     cout << endl;
     cout << "==============================" << endl;
@@ -135,12 +135,12 @@ void Skill(Player* player, Monster& monster)
 void Monster_Turn(Player* player, Monster& monster) 
 {
     // 몬스터 차례
-
+    //몬스터 기믹 발동 조건 (만들어야함)
     cout << endl;
     cout << "------ 몬스터 턴 ------" << endl;
 
 
-    //몬스터 기믹 발동 조건
+   
     
     int before_Player_HP = player->getHp();
 
@@ -166,10 +166,11 @@ void Monster_Turn(Player* player, Monster& monster)
 bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
 {
     // 전투 확인 (아직 임시로 만듬)
+
     if (monster.getHP() <= 0)
     {
         cout << endl;
-        cout << "★ 전투 승리!" << endl;
+        cout << "전투 승리!" << endl;
         cout << monster.getDropItemName() << " 획득!" << endl;
 
         Item droppedItem;
@@ -184,7 +185,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
     if (player->getHp() <= 0)
     {
         cout << endl;
-        cout << "★ 전투 패배!" << endl;
+        cout << "전투 패배!" << endl;
 
         return true;
     }
