@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\Potion">
       <UniqueIdentifier>{8988196a-4e5c-4e99-b320-05500c7e7f27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game_Manager">
+      <UniqueIdentifier>{82e34b4a-9cfd-40b9-8591-436bf1226eef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -62,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>소스 파일\Potion</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>소스 파일\Game_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Manager.cpp">
+      <Filter>소스 파일\Game_Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>헤더 파일\Potion</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Manager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

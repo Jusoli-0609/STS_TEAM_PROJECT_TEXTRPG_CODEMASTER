@@ -109,6 +109,7 @@ void OpenAlchemyWorkshop(AlchemyWorkshop& workshop)
 
 int main()
 {
+    Set_Console_Size();
     string name;
     const int SIZE = 4;
     int stat[SIZE] = { 0 };
