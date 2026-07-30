@@ -13,7 +13,7 @@ enum Battle_Menu
 
 void Battle(Player* player, Monster& monster, Inventory& inventory);
 
-void Show_Battel_Menu();
+void Show_Battle_Menu();
 
 void Player_Turn(Player* player, Monster& monster, Inventory& inventory);
 

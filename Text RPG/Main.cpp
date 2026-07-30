@@ -2,7 +2,7 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "Monster.h"
-#include "Battle.h"
+#include "Battle_System.h"
 #include "AlchemyWorkshop.h"
 #include <iostream>
 #include <string>

@@ -139,6 +139,9 @@ void Monster_Turn(Player* player, Monster& monster)
     cout << endl;
     cout << "------ 몬스터 턴 ------" << endl;
 
+
+    //몬스터 기믹 발동 조건
+    
     int before_Player_HP = player->getHp();
 
     int Damage = monster.getPower() - player->getDefence();
