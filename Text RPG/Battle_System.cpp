@@ -3,23 +3,24 @@
 
 using namespace std;
 
+//======================================================
+// 전투 시작
+//======================================================
+
 void Battle(Player* player, Monster& monster, Inventory& inventory)
 {
 
     if (player == nullptr)
     {
-        cout << "플레이어 정보가 없습니다." << endl;
         return;
     }
 
-    cout << "[전투 시작!] "
-        << player->getName()
-        << "(" << player->getJob() << ") vs "
-        << monster.getName()
-        << endl;
+    Show_Battle_Start(player, monster);
 
     while (true)
     {
+        Show_Battle_Status(player, monster);
+
         Player_Turn(player, monster, inventory);
 
         if (Check_Battle_End(player, monster, inventory))
@@ -34,11 +35,27 @@ void Battle(Player* player, Monster& monster, Inventory& inventory)
             break;
         }
     }
+
+    Show_Battle_End(player, monster);
+}
+
+//======================================================
+// UI (UI 담당)
+//======================================================
+
+void Show_Battle_Start(Player* player, Monster& monster)
+{
+    // UI 전투 시작
+}
+
+void Show_Battle_Status(Player* player, Monster& monster)
+{
+    // UI 전투 기록
 }
 
 void Show_Battle_Menu()
 {
-    // 나중에 UI 디자인 정해지면 변경 (철거 예정)
+    // UI 선택지
 
     cout << endl;
     cout << "==============================" << endl;
@@ -50,6 +67,15 @@ void Show_Battle_Menu()
     cout << "==============================" << endl;
     cout << "선택 : ";
 }
+
+void Show_Battle_End(Player* player, Monster& monster)
+{
+    // UI 전투 종료
+}
+
+//======================================================
+// 플레이어 턴
+//======================================================
 
 void Player_Turn(Player* player, Monster& monster, Inventory& inventory)
 {
@@ -77,9 +103,11 @@ void Player_Turn(Player* player, Monster& monster, Inventory& inventory)
 
     case ITEM:
     {
-        cout << "아이템 기능은 준비 중입니다." << endl;
+        Item(player, inventory);
         break;
     }
+
+
 
     default:
     {
@@ -89,12 +117,19 @@ void Player_Turn(Player* player, Monster& monster, Inventory& inventory)
     }
 }
 
+void Item(Player* player, Inventory& inventory)
+{
+    // 인벤토리 아이템
+
+    cout << "아이템 기능 준비 중입니다." << endl;
+}
+
+//======================================================
+// 플레이어 공격
+//======================================================
+
 void Attack(Player* player, Monster& monster)
 {
-    //플레이어 공격
-
-    cout << endl;
-    cout << "공격!" << endl;
 
     int Before_Monster_HP = monster.getHP();
 
@@ -106,7 +141,10 @@ void Attack(Player* player, Monster& monster)
     }
 
     monster.setHP(Before_Monster_HP - Damage);
-    
+
+    cout << endl;
+    cout << "공격!" << endl;
+
     cout << monster.getName()
         << "에게 "
         << Damage
@@ -120,29 +158,54 @@ void Attack(Player* player, Monster& monster)
         << endl;
 }
 
+//======================================================
+// 플레이어 스킬
+//======================================================
+
 void Skill(Player* player, Monster& monster)
 {
-    //플레이어 스킬 (아직 확정아님 의견 필요)
-
-    cout << endl;
-    cout << "======================" << endl;
-    cout << "스킬 시스템 (임시)" << endl;
-    cout << "======================" << endl;
-
-    cout << "준비 중입니다." << endl;
+    // 직업 스킬
 }
 
-void Monster_Turn(Player* player, Monster& monster) 
+//======================================================
+// 플레이어 아이템
+//======================================================
+
+void Item(Player* player, Inventory& inventory)
 {
-    // 몬스터 차례
-    //몬스터 기믹 발동 조건 (만들어야함)
-    cout << endl;
-    cout << "------ 몬스터 턴 ------" << endl;
+    // TODO : 인벤토리 담당
+
+    cout << "아이템 기능 준비 중입니다." << endl;
+}
+
+//======================================================
+// 몬스터 턴
+//======================================================
+
+void Monster_Turn(Player* player, Monster& monster)
+{
+    void Monster_Turn(Player * player, Monster & monster)
+    {
+        // 몬스터 차례
+
+        cout << endl;
+        cout << "------ 몬스터 턴 ------" << endl;
+
+        // TODO : 몬스터 행동 패턴
+        Monster_Attack(player, monster);
+    }
 
 
-   
-    
-    int before_Player_HP = player->getHp();
+
+}
+
+//======================================================
+// 몬스터 공격
+//======================================================
+
+void Monster_Attack(Player* player, Monster& monster)
+{
+    int Before_Player_HP = player->getHp();
 
     int Damage = monster.getPower() - player->getDefence();
 
@@ -151,22 +214,34 @@ void Monster_Turn(Player* player, Monster& monster)
         Damage = 1;
     }
 
-    player->setHp(before_Player_HP - Damage);
+    player->setHp(Before_Player_HP - Damage);
 
     cout << monster.getName()
         << "의 공격!" << endl;
 
     cout << "플레이어 HP : "
-        << before_Player_HP
+        << Before_Player_HP
         << " -> "
         << player->getHp()
         << endl;
 }
 
+
+//======================================================
+// 몬스터 스킬
+//======================================================
+
+void Monster_Skill(Player* player, Monster& monster)
+{
+    // TODO : 몬스터 담당
+}
+
+//======================================================
+// 전투 종료
+//======================================================
+
 bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
 {
-    // 전투 확인 (아직 임시로 만듬)
-
     if (monster.getHP() <= 0)
     {
         cout << endl;
@@ -191,4 +266,4 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
     }
 
     return false;
-} 
+}
