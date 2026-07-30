@@ -39,7 +39,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Battle.cpp">
+    <ClCompile Include="Battle_System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Archer.cpp">
@@ -77,7 +77,7 @@
     <ClInclude Include="Monster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Battle.h">
+    <ClInclude Include="Battle_System.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PotionRecipe.h">
