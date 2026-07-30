@@ -136,12 +136,14 @@
     <ClCompile Include="All_Recipes.cpp" />
     <ClCompile Include="Thief.cpp" />
     <ClCompile Include="Warrior.cpp" />
+    <ClCompile Include="DungeonManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Craft_Item.h" />
     <ClInclude Include="Archer.h" />
     <ClInclude Include="Battle_System.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="DungeonManager.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Magician.h" />

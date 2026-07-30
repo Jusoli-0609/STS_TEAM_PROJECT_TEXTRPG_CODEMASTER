@@ -66,6 +66,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Item</Filter>
     </ClCompile>
+    <ClCompile Include="DungeonManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>헤더 파일\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
