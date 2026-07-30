@@ -42,6 +42,7 @@ enum Monster_Stat_Index
     MONSTER_MP,
     MONSTER_POWER,
     MONSTER_DEFENCE,
+    MONSTER_SPEED,
     MONSTER_STAT_COUNT
 };
 
@@ -67,6 +68,7 @@ public:
     int getHP() const;
     int getPower() const;
     int getDefence() const;;
+    int getSpeed() const;
     std::string getDropItemName() const;
     int getDropItemPrice() const;
 

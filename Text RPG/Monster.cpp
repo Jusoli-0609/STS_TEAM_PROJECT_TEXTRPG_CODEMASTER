@@ -16,6 +16,7 @@ Monster::Monster()
 	_stat[MONSTER_MP] = 0;
 	_stat[MONSTER_POWER] = 3;
 	_stat[MONSTER_DEFENCE] = 3;
+	_stat[MONSTER_SPEED] = 3;
 }
 
 Monster::Monster(Monster_Type monster_Type)
@@ -43,6 +44,7 @@ Monster::Monster
 	_stat[MONSTER_MP] = 0;
 	_stat[MONSTER_POWER] = monster_Power;
 	_stat[MONSTER_DEFENCE] = monster_Defence;
+	_stat[MONSTER_SPEED] = 3;
 }
 
 void Monster::Initialize_Monster(Monster_Type monster_Type)
@@ -50,6 +52,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_monster_Type = monster_Type;
 
 	_stat[MONSTER_MP] = 0;
+	_stat[MONSTER_SPEED] = 3;
 
 	// 아이템관련 : 윤재님이랑 연결한 후 수정하기
 	_drop_Item_Name = "보상 미정";
@@ -67,6 +70,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 3;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"int 슬라임이 몸을 튕겨 공격했다!!!";
@@ -84,6 +88,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_POWER] = 2;
 		_stat[MONSTER_DEFENCE] = 4;
+		_stat[MONSTER_SPEED] = 1;
 
 		_attack_Message =
 			"bool 버섯이 갓으로 밀어붙였다!!!";
@@ -101,6 +106,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_POWER] = 4;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 4;
 
 		_attack_Message =
 			"if 고블린이 빠르게 검을 휘둘렀다!!!";
@@ -118,6 +124,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 3;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"array 해파리가 촉수를 휘둘렀다!!!";
@@ -135,6 +142,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_POWER] = 4;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 5;
 
 		_attack_Message =
 			"for 상어가 빠른 속도로 돌진했다!!!";
@@ -152,6 +160,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 5;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 4;
+		_stat[MONSTER_SPEED] = 1;
 
 		_attack_Message =
 			"while 고래가 꼬리로 내려쳤다!!!";
@@ -169,6 +178,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 5;
 
 		_attack_Message =
 			"parameter 거대파리가 빠르게 날아와 들이받았다!!!";
@@ -186,6 +196,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_POWER] = 2;
 		_stat[MONSTER_DEFENCE] = 5;
+		_stat[MONSTER_SPEED] = 1;
 
 		_attack_Message =
 			"return 가고일이 날개를 펼쳐 내리쳤다!!!";
@@ -203,6 +214,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 5;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"function 마도사가 마력을 발사했다!!!";
@@ -220,6 +232,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 2;
 		_stat[MONSTER_POWER] = 4;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 5;
 
 		_attack_Message =
 			"pointer 유령이 순식간에 접근해 할퀴었다!!!";
@@ -237,6 +250,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 5;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 5;
 
 		_attack_Message =
 			"null 밴시가 날카로운 비명으로 공격했다!!!";
@@ -254,6 +268,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_POWER] = 4;
 		_stat[MONSTER_DEFENCE] = 4;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"memory 사신이 낫을 휘둘렀다!!!";
@@ -271,6 +286,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 4;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"class 기계인형이 주먹을 휘둘렀다!!!";
@@ -288,6 +304,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 4;
 		_stat[MONSTER_POWER] = 5;
 		_stat[MONSTER_DEFENCE] = 3;
+		_stat[MONSTER_SPEED] = 2;
 
 		_attack_Message =
 			"inheritance 키메라가 여러 기계팔로 공격했다!!!";
@@ -305,6 +322,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 2;
+		_stat[MONSTER_SPEED] = 5;
 
 		_attack_Message =
 			"vector 드론이 기관총 세례를 퍼부었다!!!";
@@ -325,6 +343,7 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		_stat[MONSTER_HP] = 3;
 		_stat[MONSTER_POWER] = 3;
 		_stat[MONSTER_DEFENCE] = 3;
+		_stat[MONSTER_SPEED] = 3;
 
 		_attack_Message =
 			"int 슬라임이 몸을 튕겨 공격했다!!!";
@@ -352,6 +371,11 @@ int Monster::getPower() const
 int Monster::getDefence() const
 {
 	return _stat[MONSTER_DEFENCE];
+}
+
+int Monster::getSpeed() const
+{
+	return _stat[MONSTER_SPEED];
 }
 
 string Monster::getDropItemName() const
@@ -416,6 +440,10 @@ void Monster::Print_Monster_Info() const
 
 	cout << "방어력: "
 		<< _stat[MONSTER_DEFENCE]
+		<< endl;
+
+	cout << "스피드: "
+		<< _stat[MONSTER_SPEED]
 		<< endl;
 
 	cout << "========================================"
