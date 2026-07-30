@@ -2,7 +2,7 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "Monster.h"
-#include "Battle_System.h"
+#include "Battle.h"
 #include "AlchemyWorkshop.h"
 #include <iostream>
 #include <string>
@@ -109,6 +109,7 @@ void OpenAlchemyWorkshop(AlchemyWorkshop& workshop)
 
 int main()
 {
+    Set_Console_Size();
     string name;
     const int SIZE = 4;
     int stat[SIZE] = { 0 };
