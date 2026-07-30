@@ -1,38 +1,58 @@
 #pragma once
 #include <string>
 
+class Monster;
+
 class Player
 {
 protected:
-	std::string name;
-	std::string job;
-	int level;
-	int hp;
-	int mp;
-	int power;
-	int defence;
+    std::string name;
+    std::string job;
+
+    int hp;
+    int mp;
+    int atk;
+    int def;
+    int ap;
+    int sne;
+    int agi;
+
+    int level;
+    int maxexp;
+    int exp;
 
 public:
-	Player(std::string name, int hp, int mp, int power, int defence);		//==이름표와 능력치표를 받아서 캐릭터를 만들어 주세요
+    Player(const std::string& name, const int stat[]);
 
-	std::string getName();
-	std::string getJob();
-	int getLevel();
-	int getHp();
-	int getMp();
-	int getPower();
-	int getDefence();
-	
-	void setName(std::string);
-	void setJob(std::string);
-	void setHp(int hp);
-	void setMp(int mp);
-	void setPower(int power);
-	void setDefence(int defence);
+    virtual ~Player() {}
 
-	void printPlayerStatus();
-	void levelUp();
+    virtual void attack(Monster* monster) = 0;
 
-	virtual void attack() = 0;
-	virtual ~Player() = default;
+    void Print_Status() const;
+
+    std::string Get_Name() const;
+    std::string Get_Job() const;
+
+    int Get_Level() const;
+    int Get_Hp() const;
+    int Get_Mp() const;
+    int Get_ATK() const;
+    int Get_DEF() const;
+    int Get_AP() const;
+    int Get_SNE() const;
+    int Get_AGI() const;
+    int Get_Exp() const;
+
+    void Set_Hp(int hp);
+    void Set_Mp(int mp);
+    void Set_ATK(int atk);
+    void Set_DEF(int def);
+    void Set_AP(int ap);
+    void Set_SNE(int sne);
+    void Set_AGI(int agi);
+    void Set_Level(int level);
+    void Set_Exp(int exp);
+
+    void Gain_Exp(int amount);
+    void Level_Up();
 };
