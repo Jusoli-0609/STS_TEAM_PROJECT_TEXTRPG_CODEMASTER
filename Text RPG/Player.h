@@ -1,20 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
+#include <iostream>
+#include "Level_Up.h" // ë ˆë²¨ì—… ì»´í¬ë„ŒíŠ¸
 
 class Player
 {
 protected:
 	std::string name;
 	std::string job;
-	int level;
+	int maxHp;
 	int hp;
+	int maxMp;
 	int mp;
 	int power;
 	int defence;
 
-public:
-	Player(std::string name, int hp, int mp, int power, int defence);		//==ÀÌ¸§Ç¥¿Í ´É·ÂÄ¡Ç¥¸¦ ¹Ş¾Æ¼­ Ä³¸¯ÅÍ¸¦ ¸¸µé¾î ÁÖ¼¼¿ä
+	Level_Up levelSystem; // ë ˆë²¨ì—… ì»´í¬ë„ŒíŠ¸
 
+public:
+	Player(std::string name, int hp, int mp, int power, int defence);
+	virtual ~Player() = default;
+
+	// Getter / Setter
 	std::string getName();
 	std::string getJob();
 	int getLevel();
@@ -22,17 +29,17 @@ public:
 	int getMp();
 	int getPower();
 	int getDefence();
-	
-	void setName(std::string);
-	void setJob(std::string);
+
+	void setName(std::string name);
+	void setJob(std::string job);
 	void setHp(int hp);
 	void setMp(int mp);
 	void setPower(int power);
 	void setDefence(int defence);
 
+	// ë ˆë²¨ì—… ë° ê²½í—˜ì¹˜ íšë“
+	void GainExp(int amount);
 	void printPlayerStatus();
-	void levelUp();
 
 	virtual void attack() = 0;
-	virtual ~Player() = default;
 };

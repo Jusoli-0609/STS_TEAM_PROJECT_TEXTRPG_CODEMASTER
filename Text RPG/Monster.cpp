@@ -1,63 +1,56 @@
-#include "Monster.h"
+﻿#include "Monster.h"
 #include "Player.h"
 #include <iostream>
 
 using namespace std;
 
+// 🌟 매개변수 맨 뒤에 int expReward 추가!
 Monster::Monster
 (
-    string monstername,
-    int monsterhp,
-    int monsterpower,
-    int monsterdefence,
-    string dropitemname,
-    int dropitemprice
+	string monstername,
+	int monsterhp,
+	int monsterpower,
+	int monsterdefence,
+	string dropitemname,
+	int dropitemprice,
+	int expReward
 )
+	: monstername(monstername),
+	monsterhp(monsterhp),
+	monsterpower(monsterpower),
+	monsterdefence(monsterdefence),
+	dropitemname(dropitemname),
+	dropitemprice(dropitemprice),
+	_exp_reward(expReward) // 🌟 멤버 변수 _exp_reward 초기화
 {
-    this->monstername = monstername;
-    this->monsterhp = monsterhp;
-    this->monsterpower = monsterpower;
-    this->monsterdefence = monsterdefence;
-    this->dropitemname = dropitemname;
-    this->dropitemprice = dropitemprice;
 }
 
-string Monster::getName()
-{
-    return monstername;
-}
+string Monster::getName() { return monstername; }
+int Monster::getHP() { return monsterhp; }
+int Monster::getPower() { return monsterpower; }
+int Monster::getDefence() { return monsterdefence; }
+string Monster::getDropItemName() { return dropitemname; }
+int Monster::getDropItemPrice() { return dropitemprice; }
 
-void Monster::attack(Player* player)
+int Monster::getExpReward()
 {
-    cout << monstername << "��(��) �����մϴ�!" << endl;
+	return _exp_reward;
 }
 
 void Monster::setHP(int hp)
 {
-    monsterhp = hp;
+	this->monsterhp = hp;
 }
 
-int Monster::getHP()
+void Monster::attack(Player* player)
 {
-    return monsterhp;
-}
+	if (player == nullptr) return;
 
-int Monster::getDefence()
-{
-    return monsterdefence;
-}
+	int damage = monsterpower - player->getDefence();
+	if (damage <= 0) damage = 1;
 
-std::string Monster::getDropItemName()
-{
-    return dropitemname;
-}
+	int nextHp = player->getHp() - damage;
+	player->setHp(nextHp);
 
-int Monster::getPower()
-{
-    return monsterpower;
-}
-
-int Monster::getDropItemPrice()
-{
-    return dropitemprice;
+	cout << monstername << "의 공격! " << player->getName() << "에게 " << damage << " 데미지!\n";
 }
