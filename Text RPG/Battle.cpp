@@ -249,3 +249,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
 
     return false;
 }
+
+
+
+// 여기는 이상없는걸 확인했는데 뭔가 파일이 몇개 누락됨..... 뭐지   shit
