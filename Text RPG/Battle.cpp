@@ -131,6 +131,14 @@ void Battle
 				cout << "¡Ú ÀüÅõ ½Â¸®!"
 					<< endl;
 
+				int exp_Reward =
+					monster.getExpReward();
+
+				cout << "°æÇèÄ¡ "
+					<< exp_Reward
+					<< " È¹µæ!"
+					<< endl;
+
 				cout << " -> "
 					<< monster.getDropItemName()
 					<< " È¹µæ!"

@@ -71,6 +71,9 @@ public:
     int getSpeed() const;
     int getEvasion() const;
     int getAccuracy() const;
+    int getExpReward() const;
+    int getScoreReward() const;
+
     std::string getDropItemName() const;
     int getDropItemPrice() const;
 
@@ -87,6 +90,10 @@ public:
 private:
     void Initialize_Monster(Monster_Type monster_Type);
 
+    int Calculate_Exp_Reward() const;
+    int Calculate_Score_Reward() const;
+    int Get_Chapter_Number() const;
+
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
 
@@ -94,6 +101,8 @@ private:
     int _stat[MONSTER_STAT_COUNT];
     int _evasion;
     int _accuracy;
+    int _exp_Reward;
+    int _score_Reward;
 
     std::string _attack_Message;
 
