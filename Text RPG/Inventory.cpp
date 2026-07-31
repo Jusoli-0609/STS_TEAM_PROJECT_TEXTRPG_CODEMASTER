@@ -324,7 +324,6 @@ template<typename T>//8.인벤토리 소멸자
 Inventory<T>::~Inventory()
 {
     delete[] _Inventory_Items;
-    delete[] _Inventory_Items;
     _Inventory_Items = nullptr;
 }
 
