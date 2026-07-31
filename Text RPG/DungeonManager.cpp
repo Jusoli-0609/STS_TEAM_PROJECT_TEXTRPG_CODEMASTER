@@ -103,10 +103,38 @@ void Dungeon_Manager::Add_Chapter_Score(int score_Reward)
 		return;
 	}
 
+	int max_Chapter_Score =
+		Get_Required_Tutor_Score();
+
+	if
+		(_current_Chapter_Score >= max_Chapter_Score)
+	{
+		_current_Chapter_Score = max_Chapter_Score;
+		cout << "현재 챕터 점수가 이미 최대입니다." << endl;
+
+		return;
+	}
+
+	int previous_Score = _current_Chapter_Score;
+
 	_current_Chapter_Score += score_Reward;
 
-	cout << "챕터 점수 +" << score_Reward << endl;
-	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+	if
+		(_current_Chapter_Score > max_Chapter_Score)
+	{
+		_current_Chapter_Score = max_Chapter_Score;
+	}
+
+	int added_Score = _current_Chapter_Score - previous_Score;
+
+	cout << "챕터 점수 +" << added_Score << endl;
+	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << max_Chapter_Score << endl;
+
+	if
+		(_current_Chapter_Score >= max_Chapter_Score)
+	{
+		cout << "튜터 도전 조건을 달성했습니다!" << endl;
+	}
 }
 
 int Dungeon_Manager::Get_Required_Tutor_Score() const
@@ -212,7 +240,6 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory& inventory)
 			cout << "획득 경험치: " << elite_Monster.getExpReward() << endl;
 			cout << "획득 챕터 점수: " << elite_Monster.getScoreReward() << endl;
 			cout << "획득 아이템: " << elite_Monster.getDropItemName() << " " << elite_Monster.getDropItemCount() << "개" << endl;
-
 			cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << " 원" << endl;
 
 			Add_Chapter_Score(elite_Monster.getScoreReward());
@@ -368,10 +395,10 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		elite_Question.question = "정답은 3";
+		elite_Question.question = "정답은 2";
 		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "0";
-		elite_Question.choices[2] = "3";
+		elite_Question.choices[1] = "2";
+		elite_Question.choices[2] = "0";
 		elite_Question.choices[3] = "0";
 		elite_Question.correct_Answer = 2;
 		break;
@@ -379,33 +406,33 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::ARRAY_LOOP_OCEAN:
 	{
-		elite_Question.question = "정답은 1";
-		elite_Question.choices[0] = "1";
+		elite_Question.question = "정답은 0";
+		elite_Question.choices[0] = "0";
 		elite_Question.choices[1] = "0";
 		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "0";
-		elite_Question.correct_Answer = 0;
+		elite_Question.choices[3] = "4";
+		elite_Question.correct_Answer = 4;
 
 		break;
 	}
 
 	case Chapter_Type::FUNCTION_RUINS:
 	{
-		elite_Question.question = "정답은 4";
-		elite_Question.choices[0] = "0";
+		elite_Question.question = "정답은 1";
+		elite_Question.choices[0] = "1";
 		elite_Question.choices[1] = "0";
 		elite_Question.choices[2] = "0";
-		elite_Question.choices[3] = "4";
-		elite_Question.correct_Answer = 2;
+		elite_Question.choices[3] = "0";
+		elite_Question.correct_Answer = 1;
 
 		break;
 	}
 
 	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
 	{
-		elite_Question.question = "정답은 2";
-		elite_Question.choices[0] ="0";
-		elite_Question.choices[1] ="2";
+		elite_Question.question = "정답은 1";
+		elite_Question.choices[0] ="1";
+		elite_Question.choices[1] ="0";
 		elite_Question.choices[2] ="0";
 		elite_Question.choices[3] ="0";
 		elite_Question.correct_Answer = 1;
@@ -415,10 +442,10 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	case Chapter_Type::OBJECT_STL_FACTORY:
 	{
-		elite_Question.question = "정답은 3";
+		elite_Question.question = "정답은 2";
 		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "0";
-		elite_Question.choices[2] = "3";
+		elite_Question.choices[1] = "2";
+		elite_Question.choices[2] = "0";
 		elite_Question.choices[3] = "0";
 		elite_Question.correct_Answer = 2;
 
@@ -427,9 +454,9 @@ Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) co
 
 	default:
 	{
-		elite_Question.question = "정답은 2";
-		elite_Question.choices[0] = "0";
-		elite_Question.choices[1] = "2";
+		elite_Question.question = "정답은 1";
+		elite_Question.choices[0] = "1";
+		elite_Question.choices[1] = "0";
 		elite_Question.choices[2] = "0";
 		elite_Question.choices[3] = "0";
 		elite_Question.correct_Answer = 1;

@@ -208,7 +208,7 @@ void Battle
 
 		cout << "훈련장려금: "
 			<< monster.getGoldReward()
-			<< " Gold\n";
+			<< " 원\n";
 
 		cout << "처치 경험치: "
 			<< monster.getExpReward()

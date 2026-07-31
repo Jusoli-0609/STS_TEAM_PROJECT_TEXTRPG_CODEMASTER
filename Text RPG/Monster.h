@@ -84,6 +84,7 @@ public:
     int getAccuracy() const;
     int getExpReward() const;
     int getScoreReward() const;
+    int getMonsterLevel() const;
 
     std::string getDropItemName() const;
     int getDropItemPrice() const;
@@ -109,14 +110,21 @@ private:
     void Initialize_Monster(Monster_Type monster_Type);
 
     std::string Get_Code_Fragment_Name() const;
-    int Calculate_Gold_Reward() const;
-    int Calculate_Exp_Reward() const;
-    int Calculate_Score_Reward() const;
+
     int Get_Chapter_Number() const;
+    int Generate_Random_Level() const;
+
+    void Apply_Level_Bonus();
+
+    int Calculate_Exp_Reward() const;
+    int Calculate_Level_Exp_Bonus() const;
+    int Calculate_Score_Reward() const;
+    int Calculate_Gold_Reward() const;
 
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
     Monster_Grade _monster_Grade;
+    int _monster_Level;
 
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
