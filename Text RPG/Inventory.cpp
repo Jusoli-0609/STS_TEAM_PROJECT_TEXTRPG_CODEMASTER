@@ -1,11 +1,17 @@
 #include<algorithm>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 
 #include "Inventory.h"
+#include "Player.h"
 
 using namespace std;
+
+
 
 template<typename T>//1-1 기본 생성자
 Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
@@ -92,7 +98,7 @@ void Inventory<T>::Print_Inventory() const
      {
 
          cout << Inventory_Order_Index << ".";
-         _Inventory_Items[i].PrintInfo();
+         _Inventory_Items[i].Print_Info();
          Inventory_Order_Index++;
      }
     cout << " 현재 무게  : " <<
@@ -222,13 +228,39 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
     return true;
 }
 
-template<typename T>//5-2 아이템 소모
-bool Inventory<T>::Use_Item_By_Name(const std::string& item_name)
+template<typename T>//5-2 이름으로 아이템 사용 성공 및 갯수 감소
+bool Inventory<T>::Use_Item_By_Name(const string& item_name)
+{
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        if (_Inventory_Items[i]._Item_Name == item_name)
+        {
+            if (_Inventory_Items[i]._Item_Count > 0)
+            {
+                _Inventory_Items[i]._Item_Count -= 1;
+                if (_Inventory_Items[i]._Item_Count == 0)
+                {
+                    for (int j = i; j < _Current_Quantity_Of_Items - 1; j++)
+                    {
+                        _Inventory_Items[j] = _Inventory_Items[j + 1];
+                    }
+                    _Current_Quantity_Of_Items--;
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+    return false; 
+}
+
+template <typename T>//5-3 전투 중 아이템 사용
+void Inventory<T>::Use_Item_In_Battle(Player& player,Monster& monster)
 {
     if (_Current_Quantity_Of_Items == 0)
     {
         cout << "사용할 아이템이 없다!" << endl;
-        return false;
+        return;
     }
     Print_Inventory();
     int Choose_Item_To_Use_In_Battle;
@@ -239,31 +271,54 @@ bool Inventory<T>::Use_Item_By_Name(const std::string& item_name)
     if (selected_item == nullptr)
     {
         cout << "잘못된 아이템 번호다!" << endl;
-        return false;
+        return;
     }
     string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
     if (selected_item->_Item_Type_Usable == true)
     {
-        selected_item->Item_Effect(player);
-            return true;
+        selected_item->Item_Effect(player, monster);
+        Use_Item_By_Name(selected_item_name);
+        return;
     }
     else
     {
         cout << "사용할 수 없는 아이템이다!" << endl;
-        return false;
+        return;
     }
 }
 
-template <typename T>//5-3 전투 중 아이템 사용
-void Inventory<T>::Use_Item_In_Battle(Player& player)
+template <typename T>//5-6 전투 중 아이템 랜덤 사용
+void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
 {
     if (_Current_Quantity_Of_Items == 0)
     {
-         cout << "사용할 아이템이 없다!" << endl;
-         return;
+        cout << "사용할 아이템이 없다!" << endl;
+        return;
+    }
+    Print_Inventory();
+    int Random_Item_use=rand()%_Current_Quantity_Of_Items;
+    T* selected_item = Get_Item_By_Index(Random_Item_use); //  GetItemByIndex 호출 결과를 저장할 Item 포인터 변수 선언
+    if (selected_item == nullptr)
+    {
+        return;
+    }
+    string selected_item_name = selected_item->_Item_Name; // 선택한 아이템 이름을 저장할 string 변수 선언
+    if (selected_item->_Item_Type_Usable == true)
+    {
+        selected_item->Item_Effect(player, monster);
+            Use_Item_By_Name(selected_item_name);
+        return;
+    }
+    else
+    {
+        int Mental_Damage = Get_Hp(player) const - 100;
+        cout << "사용할 수 없는 아이템이다!" << endl;
+        cout << "안타까운 일입니다!" << endl;
+        cout << "운이 없는 당신을 주님이 비웃는다!" << endl;
+        cout << "정신적인 고통을 받는다! 데미지를 " << Mental_Damage << "만큼 받는다!" << endl;
+        return;
     }
 }
-
 template<typename T>//8.인벤토리 소멸자
 Inventory<T>::~Inventory()
 {
