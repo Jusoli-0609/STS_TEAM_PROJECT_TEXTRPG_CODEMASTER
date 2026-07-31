@@ -21,14 +21,32 @@ protected:
     int maxexp;
     int exp;
 
+    void Set_Start_Stat(
+        int hp,
+        int mp,
+        int atk,
+        int def,
+        int ap,
+        int sne,
+        int agi
+    );
+
+
 public:
     Player(const std::string& name);
 
     virtual ~Player() {}
 
-    virtual void attack(Monster* monster) = 0;
+    virtual void Attack(Monster* monster) = 0;
+
+    virtual void Skill1(Monster* monster) = 0;
+    virtual void Skill2(Monster* monster) = 0;
+    virtual void Skill3(Monster* monster) = 0;
+
+    virtual void Groggy_Attack(Monster* monster) = 0;
 
     void Print_Status() const;
+
 
     std::string Get_Name() const;
     std::string Get_Job() const;

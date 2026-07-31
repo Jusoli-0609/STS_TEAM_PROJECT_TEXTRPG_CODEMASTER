@@ -72,6 +72,25 @@ void Player::Level_Up()
     Print_Status();
 }
 
+void Player::Set_Start_Stat(
+    int hp,
+    int mp,
+    int atk,
+    int def,
+    int ap,
+    int sne,
+    int agi
+)
+{
+    this->hp = hp;
+    this->mp = mp;
+    this->atk = atk;
+    this->def = def;
+    this->ap = ap;
+    this->sne = sne;
+    this->agi = agi;
+}
+
 std::string Player::Get_Name() const
 {
     return name;
