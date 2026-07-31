@@ -1,7 +1,4 @@
 #pragma once
-#include <string>
+#include "Player.h"
 
-using namespace std;
-class Player;
-
-Player* Job_Selection(const string& name, const int stat[]);
+Player* Job_Selection(const string& name, int stat[]);

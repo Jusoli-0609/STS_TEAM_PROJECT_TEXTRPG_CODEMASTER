@@ -17,6 +17,6 @@ Player* Character_Creator()
 
 	cin >> name;
 
-	return Job_Selection(name, stat);
+	return Job_Selection();
 
 }
