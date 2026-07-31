@@ -22,7 +22,7 @@ protected:
     int exp;
 
 public:
-    Player(const std::string& name, const int stat[]);
+    Player(const std::string& name);
 
     virtual ~Player() {}
 

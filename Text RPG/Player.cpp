@@ -3,20 +3,20 @@
 
 #include "Player.h"
 #include "Level_Up.h"
-#include "Player_Stat_index.h"
+#include "Player_Stat_Index.h"
 
 using namespace std;
 
-Player::Player(const std::string& name, const int stat[])
+Player::Player(const std::string& name)
     : name(name),
     job("미선택"),
-    hp(stat[P_Hp]),
-    mp(stat[P_Mp]),
-    atk(stat[P_ATK]),
-    ap(stat[P_AP]),
-    def(stat[P_DEF]),
-    sne(stat[P_SNE]),
-    agi(stat[P_AGI]),
+    hp(200),
+    mp(100),
+    atk(30),
+    ap(100),
+    def(0),
+    sne(0),
+    agi(0),
     level(1),
     maxexp(100),
     exp(0)

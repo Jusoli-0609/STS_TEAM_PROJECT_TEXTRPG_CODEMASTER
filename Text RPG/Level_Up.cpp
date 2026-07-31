@@ -1,7 +1,6 @@
-#include <string>
-#include "Player.h"
+#include "Level_Up.h"
 
-void levelup(Player* player)
+void Level_Up::levelup(Player* player)
 {
-    // player를 이용한 레벨업 처리
+    // 레벨업 처리
 }
