@@ -33,7 +33,9 @@ enum class Monster_Type
 
     CLASS_MACHINE_DOLL,
     INHERITANCE_CHIMERA,
-    VECTOR_DRONE
+    VECTOR_DRONE,
+
+    CODE_SNIPPET_WRAITH
 };
 
 enum class Monster_Grade
@@ -60,6 +62,8 @@ public:
     Monster();
     Monster(Monster_Type monster_Type);
 
+    void Initialize_Elite_Monster
+    (Chapter_Type chapter_Type);
     Monster
     (
         std::string monster_Name,
@@ -80,6 +84,7 @@ public:
     int getAccuracy() const;
     int getExpReward() const;
     int getScoreReward() const;
+    int getMonsterLevel() const;
 
     std::string getDropItemName() const;
     int getDropItemPrice() const;
@@ -91,10 +96,7 @@ public:
 
     Monster_Grade getMonsterGrade() const;
 
-    void setMonsterGrade
-    (
-        Monster_Grade monster_Grade
-    );
+    void setMonsterGrade(Monster_Grade monster_Grade);
 
     std::string getAttackMessage() const;
 
@@ -108,14 +110,21 @@ private:
     void Initialize_Monster(Monster_Type monster_Type);
 
     std::string Get_Code_Fragment_Name() const;
-    int Calculate_Gold_Reward() const;
-    int Calculate_Exp_Reward() const;
-    int Calculate_Score_Reward() const;
+
     int Get_Chapter_Number() const;
+    int Generate_Random_Level() const;
+
+    void Apply_Level_Bonus();
+
+    int Calculate_Exp_Reward() const;
+    int Calculate_Level_Exp_Bonus() const;
+    int Calculate_Score_Reward() const;
+    int Calculate_Gold_Reward() const;
 
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
     Monster_Grade _monster_Grade;
+    int _monster_Level;
 
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
@@ -126,7 +135,6 @@ private:
 
     std::string _attack_Message;
 
-    // 아이템관련 : 윤재님이랑 연결한 후 수정하기
     std::string _drop_Item_Name;
     int _drop_Item_Price;
     int _drop_Item_Count;
