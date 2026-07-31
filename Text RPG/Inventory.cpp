@@ -11,8 +11,6 @@
 
 using namespace std;
 
-
-
 template<typename T>//1-1 기본 생성자
 Inventory<T>::Inventory(int max_inventory_size, int max_capacity)
 {
@@ -287,6 +285,90 @@ void Inventory<T>::Use_Item_In_Battle(Player& player, Monster& monster)
     }
 }
 
+template <typename T>//5-4 물건 버리기
+void Inventory<T>::Throw_Away_Item()
+{
+    if (_Current_Quantity_Of_Items == 0)
+    {
+        cout << "버릴 아이템이 없다!" << endl;
+        return;
+    }
+    Print_Inventory();
+    int Selected_Index;
+    cout << "몇 번 아이템을 버릴 것인가?" << endl;
+    cin >> Selected_Index;
+    while (Selected_Index<1 || Selected_Index>_Current_Quantity_Of_Items)
+    {
+        cout << "잘못된 입력이다. 다시 입력하세요." << endl;
+        cin >> Selected_Index;
+    }
+    int Vector_Index = Selected_Index - 1;
+    int Trash_Count;
+    cout << "버릴 아이템과 갯수를 입력하세요.(다 버리길 원할 경우 0번을 누르세요)" << endl;
+    cout << "취소를 원할 경우 숫자 대신 아무 키나 누르세요." << endl;
+    cin >> Trash_Count;
+    if (cin.fail())
+    {
+        cout << "아이템 버리기를 취소한다!" << endl;
+        cin.clear();
+        cin.ignore(1000, '\n');
+        return;
+    }
+    else if (Trash_Count == 0)
+    {
+        string Remove_Item_Name = _Inventory_Items[Vector_Index]._Item_Name;
+        for (int i = Vector_Index; i < _Current_Quantity_Of_Items - 1; i++)
+        {
+            _Inventory_Items[i] = _Inventory_Items[i + 1];
+        }
+       _Current_Quantity_Of_Items--;
+        cout << Remove_Item_Name << "을(를) 모두 버렸다!" << endl;
+
+    }
+    else if (Trash_Count < 0)
+    {
+        cout << "음수를 입력한다고 아이템이 늘어나지 않는다! 다시 입력하세요." << endl;
+        return;
+    }
+    else if (Trash_Count > _Inventory_Items[Vector_Index]._Item_Count)
+    {
+        cout << "갖고 있는 갯수보다 더 많은 걸 버릴려고 했다. 확인하고 다시 입력하세요." << endl;
+        return;
+    }
+    else
+    {
+        string Remove_Item_Name = _Inventory_Items[Vector_Index]._Item_Name;
+        _Inventory_Items[Vector_Index]._Item_Count -=Trash_Count;
+
+        if (_Inventory_Items[Vector_Index]._Item_Count == 0)
+        {
+            for (int i = Vector_Index; i < _Current_Quantity_Of_Items - 1; i++)
+            {
+                _Inventory_Items[i] = _Inventory_Items[i + 1];
+            }
+            _Current_Quantity_Of_Items--;
+            cout << Remove_Item_Name << "을(를) 모두 버렸다." << endl;
+            return;
+        }
+        else
+        {
+            cout << Remove_Item_Name << "을(를) " << Trash_Count << "만큼 버렸습니다." << endl;
+        }
+    }
+}
+
+template <typename T>//5-5 마지막 아이템 제거
+void Inventory<T>::Remove_Last_Item()
+{
+    if (_Current_Quantity_Of_Items == 0)
+    {
+        cout << "제거할 아이템이 없다!" << endl;
+        return;
+    }
+    _Current_Quantity_Of_Items--;
+    cout << "마지막 아이템을 제거했다!" << endl;
+}
+
 template <typename T>//5-6 전투 중 아이템 랜덤 사용
 void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
 {
@@ -316,10 +398,145 @@ void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
         cout << "안타까운 일입니다!" << endl;
         cout << "운이 없는 당신을 주님이 비웃는다!" << endl;
         cout << "정신적인 고통을 받는다! 데미지를 " << Mental_Damage << "만큼 받는다!" << endl;
-        player.Set_Hp(player.Get_Hp() - Mental_Damage);
+        player.Set_Hp(
+                      max(0,
+                             player.Get_Hp() - Mental_Damage));
         return;
     }
 }
+
+template<typename T>//6-1 아이템 정렬
+void Inventory<T>::Sort_Inventory()
+{
+     cout << R"(
+    어떤 기준으로 정렬할까요?
+    1.이름순
+    2.무게순
+    3.개수순
+    4.가격순
+    0.취소
+    )" << endl;
+    int Sort_Choice;
+    cin >> Sort_Choice;
+    switch (Sort_Choice)
+    {
+        case 1:
+        {
+        sort(_Inventory_Items, _Inventory_Items + _Current_Quantity_Of_Items,
+            [](const T& a, const T& b)
+            {
+                return a._Item_Name < b._Item_Name;
+            });
+        break;
+        }
+        case 2:
+        {
+            sort(_Inventory_Items, _Inventory_Items + _Current_Quantity_Of_Items,
+            [](const T& a, const T& b)
+            {
+                return a._Item_Weight < b._Item_Weight;
+            });
+        break;
+        }
+        case 3:
+        {
+            sort(_Inventory_Items, _Inventory_Items + _Current_Quantity_Of_Items,
+            [](const T& a, const T& b)
+            {
+                return a._Item_Count < b._Item_Count;
+            }
+        );
+
+        break;
+        }
+        case 4:
+        {
+            sort(_Inventory_Items, _Inventory_Items + _Current_Quantity_Of_Items,
+            [](const T& a, const T& b)
+            {
+                return a._Item_Price < b._Item_Price;
+            }
+        );
+        break;
+    }
+
+    case 0:
+    {
+        cout << "정렬을 취소한다." << endl;
+        break;
+    }
+    default:
+    {
+
+        cout << "잘못된 입력이다." << endl;
+        break;
+    }
+    }
+}
+
+template<typename T>//6-2 아이템 순서 골라 바꾸기
+void Inventory<T>::Change_Inventory_Order()
+{
+    if (_Current_Quantity_Of_Items==0)
+           {
+               cout << "인벤토리가 비어 있다." << endl;
+               return;
+           }
+           if (_Current_Quantity_Of_Items < 2)
+           {
+               cout << "순서를 바꿀 아이템이 부족하다." << endl;
+               return;
+           }
+           Print_Inventory();
+           int First_Selected_Index;
+           int Second_Selected_Index;
+          
+           cout << "첫 번째로 바꿀 아이템 번호를 입력하세요: ";
+           cin >> First_Selected_Index;
+         
+          
+           while (First_Selected_Index<1 || First_Selected_Index > _Current_Quantity_Of_Items)
+           {
+               cout << "잘못된 입력이다. 다시 입력하세요: ";
+               cin >> First_Selected_Index;
+
+           }
+           cout << "두 번째로 바꿀 아이템 번호를 입력하세요: ";
+           cin >> Second_Selected_Index;
+           while (Second_Selected_Index<1 || Second_Selected_Index >_Current_Quantity_Of_Items)
+           {
+               cout << "잘못된 입력이다. 다시 입력하세요: ";
+               cin >> Second_Selected_Index;
+           }
+           if (First_Selected_Index == Second_Selected_Index)
+           {
+               cout << "같은 아이템 번호를 선택했다. 순서를 변경하지 않는다." << endl;
+               return;
+           }
+           int First_Vector_Index = First_Selected_Index - 1;
+           int Second_Vector_Index = Second_Selected_Index - 1;
+           swap(_Inventory_Items[First_Vector_Index],_Inventory_Items[Second_Vector_Index]);
+           cout << "아이템 순서를 변경했다." << endl;
+}
+
+template<typename T>//7.인벤토리 용량 확장
+void Inventory<T>::Increase_Max_Capacity(int new_max_capacity)
+{
+    if (new_max_capacity <= _Max_Inventory_Size)
+    {
+        return;
+    }
+    T* new_items = new T[new_max_capacity];
+    for (int = i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        new_items[i] = _Inventory_Items[i];
+    }
+    delete[] _Inventory_Items;
+    _Inventory_Items = new_items;
+    _Max_Inventory_Size = new_max_capacity;
+    cout << "인벤토리 슬롯이 " << new_max_capacity << "칸으로 확장되었다!" << endl;
+}
+
 template<typename T>//8.인벤토리 소멸자
 Inventory<T>::~Inventory()
 {
