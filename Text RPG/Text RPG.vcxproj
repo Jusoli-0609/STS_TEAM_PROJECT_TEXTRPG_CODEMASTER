@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Battle.cpp" />
     <ClCompile Include="Character_Creator.cpp" />
     <ClCompile Include="Console_Manager.cpp" />
     <ClCompile Include="Craft_Item.cpp" />
@@ -149,7 +148,6 @@
     <ClCompile Include="Tutor_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Battle.h" />
     <ClInclude Include="Character_Creator.h" />
     <ClInclude Include="Console_Manager.h" />
     <ClInclude Include="Craft_Item.h" />
