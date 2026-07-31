@@ -31,22 +31,27 @@ protected:
         int agi
     );
 
+    int Calculate_Damage(
+        float atkRatio,
+        float defRatio,
+        float hpRatio,
+        float mpRatio,
+        float sneRatio,
+        float agiRatio,
+        int targetDef
+    ) const;
 
 public:
     Player(const std::string& name);
-
     virtual ~Player() {}
 
     virtual void Attack(Monster* monster) = 0;
-
     virtual void Skill1(Monster* monster) = 0;
     virtual void Skill2(Monster* monster) = 0;
     virtual void Skill3(Monster* monster) = 0;
-
     virtual void Groggy_Attack(Monster* monster) = 0;
 
     void Print_Status() const;
-
 
     std::string Get_Name() const;
     std::string Get_Job() const;
@@ -60,6 +65,7 @@ public:
     int Get_SNE() const;
     int Get_AGI() const;
     int Get_Exp() const;
+    int Get_MaxExp() const;
 
     void Set_Hp(int hp);
     void Set_Mp(int mp);
@@ -70,7 +76,42 @@ public:
     void Set_AGI(int agi);
     void Set_Level(int level);
     void Set_Exp(int exp);
+    void Set_MaxExp(int maxexp);
 
     void Gain_Exp(int amount);
     void Level_Up();
+
+    // Battle_System 및 기존 조원 코드 호환용 함수
+    std::string getName() const;
+    std::string getJob() const;
+
+    int getLevel() const;
+    int getHp() const;
+    int getHP() const;
+    int getMp() const;
+    int getMP() const;
+    int getPower() const;
+    int getAtk() const;
+    int getDefence() const;
+    int getDef() const;
+    int getAp() const;
+    int getSne() const;
+    int getAgi() const;
+    int getExp() const;
+    int getMaxExp() const;
+
+    void setHp(int hp);
+    void setHP(int hp);
+    void setMp(int mp);
+    void setMP(int mp);
+    void setPower(int atk);
+    void setAtk(int atk);
+    void setDefence(int def);
+    void setDef(int def);
+    void setAp(int ap);
+    void setSne(int sne);
+    void setAgi(int agi);
+    void setLevel(int level);
+    void setExp(int exp);
+    void setMaxExp(int maxexp);
 };
