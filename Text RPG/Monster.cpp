@@ -16,6 +16,7 @@ namespace
 Monster::Monster()
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
+	_monster_Grade(Monster_Grade::NORMAL),
 	_monster_Name("int ΩΩ∂Û¿”"),
 	_evasion(80),
 	_accuracy(80),
@@ -56,6 +57,7 @@ Monster::Monster
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name(monster_Name),
+	_monster_Grade(Monster_Grade::NORMAL),
 	_evasion(80),
 	_accuracy(80),
 	_exp_Reward(0),
@@ -614,6 +616,19 @@ Chapter_Type Monster::getChapterType() const
 string Monster::getAttackMessage() const
 {
 	return _attack_Message;
+}
+
+Monster_Grade Monster::getMonsterGrade() const
+{
+	return _monster_Grade;
+}
+
+void Monster::setMonsterGrade
+(
+	Monster_Grade monster_Grade
+)
+{
+	_monster_Grade = monster_Grade;
 }
 
 void Monster::setHP(int hp)

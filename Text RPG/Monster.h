@@ -36,6 +36,14 @@ enum class Monster_Type
     VECTOR_DRONE
 };
 
+enum class Monster_Grade
+{
+    NORMAL,
+    ELITE,
+    TUTODBR,
+    FINAL_BOSS
+};
+
 enum Monster_Stat_Index
 {
     MONSTER_HP,
@@ -81,6 +89,13 @@ public:
     Monster_Type getMonsterType() const;
     Chapter_Type getChapterType() const;
 
+    Monster_Grade getMonsterGrade() const;
+
+    void setMonsterGrade
+    (
+        Monster_Grade monster_Grade
+    );
+
     std::string getAttackMessage() const;
 
     void setHP(int hp);
@@ -100,6 +115,7 @@ private:
 
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
+    Monster_Grade _monster_Grade;
 
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
