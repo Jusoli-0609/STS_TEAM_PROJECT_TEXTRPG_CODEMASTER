@@ -1,22 +1,21 @@
 #include "Level_Up.h"
-<<<<<<< HEAD
-
-void Level_Up::levelup(Player* player)
-{
-    // ë ˆë²¨ì—… ì²˜ë¦¬
-=======
 #include "Player.h"
 #include <iostream>
 
 using namespace std;
 
-// 1. _stat_points ÃÊ±âÈ­ Ãß°¡
+// 1. _stat_points ì´ˆê¸°í™” ì¶”ê°€
 Level_Up::Level_Up()
-	: _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
+    : _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
 {
 }
 
-// 2. ¼Ò¸êÀÚ ±¸ÇöºÎ Ãß°¡ (¡Ú ÀÌ ºÎºÐÀÌ ¾ø¾î¼­ LNK ¿À·ù°¡ ³­ °Í)
+void Level_Up::levelup(Player* player)
+{
+    // ë ˆë²¨ì—… ì²˜ë¦¬
+}
+
+// 2. ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ (ï¿½ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¼­ LNK ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½)
 Level_Up::~Level_Up()
 {
 }
@@ -41,7 +40,7 @@ void Level_Up::GainExp(Player* player, int amount)
 	if (player == nullptr || amount <= 0) return;
 
 	_current_exp += amount;
-	cout << "-> °æÇèÄ¡ +" << amount << " È¹µæ! (ÇöÀç °æÇèÄ¡: " << _current_exp << " / " << _max_exp << ")\n";
+	cout << "-> ï¿½ï¿½ï¿½ï¿½Ä¡ +" << amount << " È¹ï¿½ï¿½! (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡: " << _current_exp << " / " << _max_exp << ")\n";
 
 	while (_current_exp >= _max_exp && _max_exp > 0)
 	{
@@ -70,10 +69,13 @@ void Level_Up::LevelUpProcess(Player* player)
 	player->setPower(player->getPower() + powerBonus);
 	player->setDefence(player->getDefence() + defenceBonus);
 
-	cout << "\n¡Ú====================================¡Ú\n";
-	cout << "  [ ·¹º§ ¾÷! ] Lv." << prevLevel << " -> Lv." << _current_level << "\n";
+	cout << "\nï¿½ï¿½====================================ï¿½ï¿½\n";
+	cout << "  [ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½! ] Lv." << prevLevel << " -> Lv." << _current_level << "\n";
 	cout << "  HP +" << hpBonus << ", MP +" << mpBonus
-		<< ", °ø°Ý·Â +" << powerBonus << ", ¹æ¾î·Â +" << defenceBonus << " »ó½Â!\n";
-	cout << "¡Ú====================================¡Ú\n\n";
+		<< ", ï¿½ï¿½ï¿½Ý·ï¿½ +" << powerBonus << ", ï¿½ï¿½ï¿½ï¿½ +" << defenceBonus << " ï¿½ï¿½ï¿½!\n";
+	cout << "ï¿½ï¿½====================================ï¿½ï¿½\n\n";
+<<<<<<< HEAD
 >>>>>>> Battle_System
+=======
+>>>>>>> Development_0730_V2
 }

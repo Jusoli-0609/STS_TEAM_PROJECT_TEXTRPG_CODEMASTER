@@ -1,15 +1,6 @@
 #pragma once
-<<<<<<< HEAD
-#include "Player.h"
 
-
-class Level_Up
-{
-public:
-    static void levelup(Player* player);
-=======
-
-class Player; // Àü¹æ ¼±¾ð
+class Player; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 class Level_Up
 {
@@ -22,14 +13,27 @@ private:
     void LevelUpProcess(Player* player);
 
 public:
+private:
+    int _current_level;
+    int _current_exp;
+    int _max_exp;
+    int _stat_points;
+
+    void LevelUpProcess(Player* player);
+
+public:
+    void levelup(Player* player);
     Level_Up();
-    ~Level_Up(); // <- ¼Ò¸êÀÚµµ ¸ÂÃçÁÖ¸é ÁÁ´Ù.
+    ~Level_Up(); // <- ï¿½Ò¸ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
     int GetCurrentLevel() const;
     int GetCurrentExp() const;
     int GetMaxExp() const;
-    int GetStatPoints() const; // <- ½ºÅÈ Æ÷ÀÎÆ® ¹ÝÈ¯ ÇÔ¼ö Ãß°¡!
+    int GetStatPoints() const; // <- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯ ï¿½Ô¼ï¿½ ï¿½ß°ï¿½!
 
     void GainExp(Player* player, int amount);
+<<<<<<< HEAD
 >>>>>>> Battle_System
+=======
+>>>>>>> Development_0730_V2
 };
