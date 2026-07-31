@@ -4,10 +4,22 @@
 
 using namespace std;
 
+namespace
+{
+	constexpr int BASE_EXP_REWARD = 100;
+	constexpr int BASE_SCORE_REWARD = 100;
+
+	constexpr double CHAPTER_REWARD_MULTIPLIER = 1.3;
+}
+
 Monster::Monster()
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name("int 슬라임"),
+	_evasion(80),
+	_accuracy(20),
+	_exp_Reward(0),
+	_score_Reward(0),
 	_attack_Message("int 슬라임이 몸을 튕겨 공격했다!!!"),
 	_drop_Item_Name("보상 미정"),
 	_drop_Item_Price(0)
@@ -17,6 +29,9 @@ Monster::Monster()
 	_stat[MONSTER_POWER] = 3;
 	_stat[MONSTER_DEFENCE] = 3;
 	_stat[MONSTER_SPEED] = 3;
+
+	_exp_Reward = Calculate_Exp_Reward();
+	_score_Reward = Calculate_Score_Reward();
 }
 
 Monster::Monster(Monster_Type monster_Type)
@@ -36,6 +51,10 @@ Monster::Monster
 	: _monster_Type(Monster_Type::INT_SLIME),
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name(monster_Name),
+	_evasion(80),
+	_accuracy(80),
+	_exp_Reward(0),
+	_score_Reward(0),
 	_attack_Message(monster_Name + "이(가) 공격했다!!!"),
 	_drop_Item_Name(drop_Item_Name),
 	_drop_Item_Price(drop_Item_Price)
@@ -45,6 +64,9 @@ Monster::Monster
 	_stat[MONSTER_POWER] = monster_Power;
 	_stat[MONSTER_DEFENCE] = monster_Defence;
 	_stat[MONSTER_SPEED] = 3;
+
+	_exp_Reward = Calculate_Exp_Reward();
+	_score_Reward = Calculate_Score_Reward();
 }
 
 void Monster::Initialize_Monster(Monster_Type monster_Type)
@@ -53,6 +75,9 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 
 	_stat[MONSTER_MP] = 0;
 	_stat[MONSTER_SPEED] = 3;
+
+	_evasion = 80;
+	_accuracy = 20;
 
 	// 아이템관련 : 윤재님이랑 연결한 후 수정하기
 	_drop_Item_Name = "보상 미정";
@@ -351,6 +376,85 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 		break;
 	}
 	}
+
+	_exp_Reward = Calculate_Exp_Reward();
+	_score_Reward = Calculate_Score_Reward();
+}
+
+int Monster::Get_Chapter_Number() const
+{
+	switch (_chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		return 1;
+	}
+
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		return 2;
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	{
+		return 3;
+	}
+
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		return 4;
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		return 5;
+	}
+
+	default:
+	{
+		return 1;
+	}
+	}
+}
+
+int Monster::Calculate_Exp_Reward() const
+{
+	double exp_Reward =
+		static_cast<double>(BASE_EXP_REWARD);
+
+	int chapter_Number =
+		Get_Chapter_Number();
+
+	for (int i = 1; i < chapter_Number; i++)
+	{
+		exp_Reward *=
+			CHAPTER_REWARD_MULTIPLIER;
+	}
+
+	return static_cast<int>
+		(
+			exp_Reward + 0.5
+			);
+}
+
+int Monster::Calculate_Score_Reward() const
+{
+	double score_Reward =
+		static_cast<double>(BASE_SCORE_REWARD);
+
+	int chapter_Number =
+		Get_Chapter_Number();
+
+	for (int i = 1; i < chapter_Number; i++)
+	{
+		score_Reward *=
+			CHAPTER_REWARD_MULTIPLIER;
+	}
+
+	return static_cast<int>
+		(
+			score_Reward + 0.5
+			);
 }
 
 string Monster::getName() const
@@ -376,6 +480,26 @@ int Monster::getDefence() const
 int Monster::getSpeed() const
 {
 	return _stat[MONSTER_SPEED];
+}
+
+int Monster::getEvasion() const
+{
+	return _evasion;
+}
+
+int Monster::getAccuracy() const
+{
+	return _accuracy;
+}
+
+int Monster::getExpReward() const
+{
+	return _exp_Reward;
+}
+
+int Monster::getScoreReward() const
+{
+	return _score_Reward;
 }
 
 string Monster::getDropItemName() const
@@ -444,6 +568,24 @@ void Monster::Print_Monster_Info() const
 
 	cout << "스피드: "
 		<< _stat[MONSTER_SPEED]
+		<< endl;
+
+	cout << "회피율: "
+		<< _evasion
+		<< "%"
+		<< endl;
+
+	cout << "명중률: "
+		<< _accuracy
+		<< "%"
+		<< endl;
+
+	cout << "처치 경험치: "
+		<< _exp_Reward
+		<< endl;
+
+	cout << "처치 점수: "
+		<< _score_Reward
 		<< endl;
 
 	cout << "========================================"
