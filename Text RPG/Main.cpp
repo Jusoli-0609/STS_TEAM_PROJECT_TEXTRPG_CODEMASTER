@@ -1,16 +1,21 @@
-#include "Main.h"
-#include <iostream>
+#include <iostream> 
 #include <string>
+#include <limits>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include "Main.h"
 
 using namespace std;
 
 void PrintLine()
 {
-	cout << string(50, '=') << endl;
+    cout << string(50, '=') << endl;
 }
 
 int main()
 {
+    srand(static_cast<unsigned int>(time(nullptr)));
     Console_Manager Console(120, 40);
 
     Console.Set_Console_Size();
@@ -22,4 +27,3 @@ int main()
     PrintLine();
 
     return 0;
-}
