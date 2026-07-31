@@ -1,5 +1,6 @@
 #include "Monster.h"
 #include "Player.h"
+#include <cstdlib>
 #include <iostream>
 
 using namespace std;
@@ -17,12 +18,14 @@ Monster::Monster()
 	_chapter_Type(Chapter_Type::VARIABLE_CONDITION_FOREST),
 	_monster_Name("int 슬라임"),
 	_evasion(80),
-	_accuracy(20),
+	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message("int 슬라임이 몸을 튕겨 공격했다!!!"),
-	_drop_Item_Name("보상 미정"),
-	_drop_Item_Price(0)
+	_attack_Message("int 슬라임이 공격했다."),
+	_drop_Item_Name(""),
+	_drop_Item_Price(0),
+	_drop_Item_Count(0),
+	_gold_Reward(0)
 {
 	_stat[MONSTER_HP] = 3;
 	_stat[MONSTER_MP] = 0;
@@ -31,10 +34,12 @@ Monster::Monster()
 	_stat[MONSTER_SPEED] = 3;
 
 	_exp_Reward = Calculate_Exp_Reward();
+
 	_score_Reward = Calculate_Score_Reward();
 }
 
 Monster::Monster(Monster_Type monster_Type)
+	: Monster()
 {
 	Initialize_Monster(monster_Type);
 }
@@ -55,9 +60,11 @@ Monster::Monster
 	_accuracy(80),
 	_exp_Reward(0),
 	_score_Reward(0),
-	_attack_Message(monster_Name + "이(가) 공격했다!!!"),
+	_attack_Message(monster_Name + "이(가) 공격했다."),
 	_drop_Item_Name(drop_Item_Name),
-	_drop_Item_Price(drop_Item_Price)
+	_drop_Item_Price(drop_Item_Price),
+	_drop_Item_Count(0),
+	_gold_Reward(0)
 {
 	_stat[MONSTER_HP] = monster_HP;
 	_stat[MONSTER_MP] = 0;
@@ -66,6 +73,7 @@ Monster::Monster
 	_stat[MONSTER_SPEED] = 3;
 
 	_exp_Reward = Calculate_Exp_Reward();
+
 	_score_Reward = Calculate_Score_Reward();
 }
 
@@ -79,7 +87,6 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_evasion = 80;
 	_accuracy = 20;
 
-	// 아이템관련 : 윤재님이랑 연결한 후 수정하기
 	_drop_Item_Name = "보상 미정";
 	_drop_Item_Price = 0;
 
@@ -381,6 +388,78 @@ void Monster::Initialize_Monster(Monster_Type monster_Type)
 	_score_Reward = Calculate_Score_Reward();
 }
 
+std::string Monster::Get_Code_Fragment_Name() const
+{
+	switch (_chapter_Type)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		return "하급 코드 조각";
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		return "중급 코드 조각";
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		return "상급 코드 조각";
+	}
+
+	default:
+	{
+		return "하급 코드 조각";
+	}
+	}
+}
+
+int Monster::Calculate_Gold_Reward() const
+{
+	return rand() % 31 + 20;
+}
+
+void Monster::Generate_Drop_Reward()
+{
+	_drop_Item_Count = 1;
+	_gold_Reward = Calculate_Gold_Reward();
+
+	int item_Roll = rand() % 3;
+
+	switch (item_Roll)
+	{
+	case 0:
+	{
+		_drop_Item_Name = Get_Code_Fragment_Name();
+
+		break;
+	}
+
+	case 1:
+	{
+		_drop_Item_Name = "컵라면";
+
+		break;
+	}
+
+	case 2:
+	{
+		_drop_Item_Name = "에너지드링크";
+
+		break;
+	}
+
+	default:
+	{
+		_drop_Item_Name = Get_Code_Fragment_Name();
+
+		break;
+	}
+	}
+}
+
 int Monster::Get_Chapter_Number() const
 {
 	switch (_chapter_Type)
@@ -512,6 +591,16 @@ int Monster::getDropItemPrice() const
 	return _drop_Item_Price;
 }
 
+int Monster::getDropItemCount() const
+{
+	return _drop_Item_Count;
+}
+
+int Monster::getGoldReward() const
+{
+	return _gold_Reward;
+}
+
 Monster_Type Monster::getMonsterType() const
 {
 	return _monster_Type;
@@ -539,7 +628,6 @@ void Monster::setHP(int hp)
 
 void Monster::attack(Player* player) const
 {
-	// 현재는 Player의 값을 직접 사용하지 않음
 	(void)player;
 
 	Print_Attack_Message();
@@ -590,6 +678,19 @@ void Monster::Print_Monster_Info() const
 
 	cout << "========================================"
 		<< endl;
+
+	cout << "드롭 아이템: "
+		<< _drop_Item_Name
+		<< " "
+		<< _drop_Item_Count
+		<< "개"
+		<< endl;
+
+	cout << "훈련장려금: "
+		<< _gold_Reward
+		<< " Gold"
+		<< endl;
+
 }
 
 void Monster::Print_Attack_Message() const

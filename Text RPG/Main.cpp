@@ -7,6 +7,8 @@
 #include "DungeonManager.h"
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -73,6 +75,14 @@ void OpenAlchemyWorkshop(AlchemyWorkshop& workshop)
 
 int main()
 {
+    srand
+    (
+        static_cast<unsigned int>
+        (
+            time(nullptr)
+            )
+    );
+
     string name;
     const int SIZE = 4;
     int stat[SIZE] = { 0 };

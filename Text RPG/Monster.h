@@ -50,8 +50,7 @@ class Monster
 {
 public:
     Monster();
-
-    explicit Monster(Monster_Type monster_Type);
+    Monster(Monster_Type monster_Type);
 
     Monster
     (
@@ -76,6 +75,8 @@ public:
 
     std::string getDropItemName() const;
     int getDropItemPrice() const;
+    int getDropItemCount() const;
+    int getGoldReward() const;
 
     Monster_Type getMonsterType() const;
     Chapter_Type getChapterType() const;
@@ -86,10 +87,13 @@ public:
     void attack(Player* player)const;
     void Print_Monster_Info() const;
     void Print_Attack_Message() const;
+    void Generate_Drop_Reward();
 
 private:
     void Initialize_Monster(Monster_Type monster_Type);
 
+    std::string Get_Code_Fragment_Name() const;
+    int Calculate_Gold_Reward() const;
     int Calculate_Exp_Reward() const;
     int Calculate_Score_Reward() const;
     int Get_Chapter_Number() const;
@@ -109,4 +113,6 @@ private:
     // 아이템관련 : 윤재님이랑 연결한 후 수정하기
     std::string _drop_Item_Name;
     int _drop_Item_Price;
+    int _drop_Item_Count;
+    int _gold_Reward;
 };
