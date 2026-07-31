@@ -1,14 +1,15 @@
 #pragma once
 #include <windows.h>
 #include <cstdlib>
+#include < string >
 
 class Console_Manager
-//콘솔 화면 기능을 모아둔 클래스 
+    //콘솔 화면 기능을 모아둔 클래스 
 {
 private:
     int _Width;
     int _Height;
-//콘솔의 가로, 세로 크기 저장
+    //콘솔의 가로, 세로 크기 저장
 
 
 public:
@@ -23,7 +24,9 @@ public:
 
     void Set_Cursor_Position(int x, int y);
     //커서 위치 이동 함수
-   
+
     void Clear();
     //화면 초기화 함수
+
+    void Slow_Print(const std::string& Text, int DelayMs);
 };

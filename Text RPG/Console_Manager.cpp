@@ -1,6 +1,10 @@
 #include "Console_Manager.h"
 #include <string>
+#include <thread>
+#include <chrono>
+#include <iostream>
 
+using namespace std;
 
 Console_Manager::Console_Manager()
 {
@@ -22,7 +26,7 @@ void Console_Manager::Set_Console_Size()
     std::string Height_Text = std::to_string(_Height);
     //system에서 int를 못 받아서 문자열로 변경
 
-    std::string command = 
+    std::string command =
         "mode con cols=" + Width_Text + " lines=" + Height_Text;
 
     system(command.c_str());
@@ -51,3 +55,17 @@ void Console_Manager::Clear()
 {
     system("cls");
 }
+
+void Console_Manager::Slow_Print(const std::string& Text, int DelayMs)
+{
+    for (char ch : Text)
+    {
+        cout << ch << flush;
+        this_thread::sleep_for(chrono::milliseconds(DelayMs));
+    }
+
+    cout << endl;
+}
+//이거 어떤식으로 호출하냐면
+//Console.Slow_Print("당신은 8시 55분에 눈을 떴다!", 50);
+//이런식으로 써주시면 됩니다.
