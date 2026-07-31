@@ -33,7 +33,9 @@ enum class Monster_Type
 
     CLASS_MACHINE_DOLL,
     INHERITANCE_CHIMERA,
-    VECTOR_DRONE
+    VECTOR_DRONE,
+
+    CODE_SNIPPET_WRAITH
 };
 
 enum class Monster_Grade
@@ -60,6 +62,8 @@ public:
     Monster();
     Monster(Monster_Type monster_Type);
 
+    void Initialize_Elite_Monster
+    (Chapter_Type chapter_Type);
     Monster
     (
         std::string monster_Name,
@@ -91,10 +95,7 @@ public:
 
     Monster_Grade getMonsterGrade() const;
 
-    void setMonsterGrade
-    (
-        Monster_Grade monster_Grade
-    );
+    void setMonsterGrade(Monster_Grade monster_Grade);
 
     std::string getAttackMessage() const;
 
@@ -126,7 +127,6 @@ private:
 
     std::string _attack_Message;
 
-    // 아이템관련 : 윤재님이랑 연결한 후 수정하기
     std::string _drop_Item_Name;
     int _drop_Item_Price;
     int _drop_Item_Count;
