@@ -69,9 +69,12 @@
     <ClCompile Include="DungeonManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Level_Up.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+=======
+>>>>>>> Item_Inventory_0731_V2
     <ClCompile Include="Character_Creator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -87,6 +90,12 @@
     <ClCompile Include="Job_Selection.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Level_Up.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+>>>>>>> Item_Inventory_0731_V2
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -131,9 +140,12 @@
     <ClInclude Include="DungeonManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Level_Up.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+=======
+>>>>>>> Item_Inventory_0731_V2
     <ClInclude Include="Character_Creator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -149,6 +161,12 @@
     <ClInclude Include="JYJ.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Level_Up.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+>>>>>>> Item_Inventory_0731_V2
     <ClInclude Include="Player_Stat_Index.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
