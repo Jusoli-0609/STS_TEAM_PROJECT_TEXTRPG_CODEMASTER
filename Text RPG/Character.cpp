@@ -71,7 +71,7 @@ void PrintStatus(string& name, int stat[])		// 능력치 함수
 	PrintLine();
 }
 
-void Upgrade(string& name, int stat[], Inventory& inventory)
+void Upgrade(string& name, int stat[], Inventory<Item>& inventory)
 {
 	int choice;
 	bool isGamestart = false;			//게임 시작 여부
@@ -91,12 +91,12 @@ void Upgrade(string& name, int stat[], Inventory& inventory)
 		{
 		case 1:
 			stat[0] += 20;
-			inventory.UseItem(1);
+			// inventory.UseItem(1);
 			break;
 
 		case 2:
 			stat[1] += 20;
-			inventory.UseItem(2);
+			// inventory.UseItem(2);
 			break;
 
 		case 3:
@@ -135,39 +135,45 @@ void ChoiceJob(string& name, int stat[], Player*& player)
 	switch (Options)
 	{
 	case 1:
-		player = new Warrior(name, stat[0], stat[1], stat[2], stat[3]);
+		player = new Warrior(name, stat);
 
 		cout << "* 전사로 전직하였습니다. (방어력 +30)" << endl;
-		player->attack();
+
+		
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
 
 	case 2:
 	{
-		player = new Magician(name, stat[0], stat[1], stat[2], stat[3]);
+		player = new Magician(name, stat);
 
 		cout << "* 마법사로 전직하였습니다. (MP +30)" << endl;
-		player->attack();
+
+		
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
 	}
 
 	case 3:
-		player = new Thief(name, stat[0], stat[1], stat[2], stat[3]);
+		player = new Thief(name, stat);
 
 		cout << "* 도적으로 전직하였습니다. (공격력 +30)" << endl;
-		player->attack();
+
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
 
 	case 4:
-		player = new Archer(name, stat[0], stat[1], stat[2], stat[3]);
+		player = new Archer(name, stat);
 
 		cout << "* 궁수로 전직하였습니다. (HP +30)" << endl;
-		player->attack();
+
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;

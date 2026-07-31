@@ -123,11 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character_Creator.cpp" />
+    <ClCompile Include="Console_Manager.cpp" />
     <ClCompile Include="Craft_Item.cpp" />
     <ClCompile Include="Archer.cpp" />
     <ClCompile Include="Battle_System.cpp" />
+    <ClCompile Include="Game_Manager.cpp" />
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Job_Selection.cpp" />
+    <ClCompile Include="JYJ.cpp" />
+    <ClCompile Include="Level_Up.cpp" />
     <ClCompile Include="Magician.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -137,22 +144,37 @@
     <ClCompile Include="Thief.cpp" />
     <ClCompile Include="Warrior.cpp" />
     <ClCompile Include="DungeonManager.cpp" />
+    <ClCompile Include="Tutor.cpp" />
+    <ClCompile Include="Tutor_Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character_Creator.h" />
+    <ClInclude Include="Console_Manager.h" />
     <ClInclude Include="Craft_Item.h" />
     <ClInclude Include="Archer.h" />
     <ClInclude Include="Battle_System.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="DungeonManager.h" />
+    <ClInclude Include="Game_Manager.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Job_Selection.h" />
+    <ClInclude Include="JYJ.h" />
+    <ClInclude Include="Level_Up.h" />
     <ClInclude Include="Magician.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="All_Recipes.h" />
+    <ClInclude Include="Player_Stat_Index.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Thief.h" />
     <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Tutor.h" />
+    <ClInclude Include="Tutor_Manager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Text RPG.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

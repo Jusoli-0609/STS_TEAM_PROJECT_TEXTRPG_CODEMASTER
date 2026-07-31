@@ -1,22 +1,29 @@
 #include "DungeonManager.h"
-#include "Battle.h"
+#include "Battle_System.h"
 #include <iostream>
 
 using namespace std;
+
+namespace
+{
+	constexpr int BASE_TUTOR_REQUIRED_SCORE = 300;
+	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3;
+}
 
 Dungeon_Manager::Dungeon_Manager()
 	: _current_Chapter
 	(
 		Chapter_Type::VARIABLE_CONDITION_FOREST
 	),
-	_is_All_Chapter_Cleared(false)
+	_is_All_Chapter_Cleared(false),
+	_current_Chapter_Score(0)
 {
 }
 
 void Dungeon_Manager::Open_Dungeon
 (
 	Player* player,
-	Inventory& inventory
+	Inventory<Item>& inventory
 )
 {
 	if (player == nullptr)
@@ -28,11 +35,7 @@ void Dungeon_Manager::Open_Dungeon
 
 	if (_is_All_Chapter_Cleared)
 	{
-		cout << "모든 일반 챕터를 클리어했습니다."
-			<< endl;
-
-		// TODO: 최종 보스 던전과 연결하기
-
+		cout << "모든 일반 챕터를 클리어했습니다." << endl;
 		return;
 	}
 
@@ -42,6 +45,7 @@ void Dungeon_Manager::Open_Dungeon
 
 	cout << "1. 현재 챕터 입장" << endl;
 	cout << "0. 메인 메뉴로 돌아가기" << endl;
+	cout << "2. 튜터에게 도전" << endl;
 	cout << "선택: ";
 
 	cin >> dungeon_Choice;
@@ -55,6 +59,23 @@ void Dungeon_Manager::Open_Dungeon
 			player,
 			inventory
 		);
+
+		break;
+	}
+
+	case 2:
+	{
+		if (!Check_Tutor_Challenge_Available())
+		{
+			cout << "튜터에게 도전하기 위한 점수가 부족합니다." << endl;
+			cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+
+			break;
+		}
+
+		cout << "튜터 도전 조건을 달성했습니다!" << endl;
+		cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
+		cout << "튜터 전투는 추후 연결" << endl;
 
 		break;
 	}
@@ -80,24 +101,34 @@ bool Dungeon_Manager::Check_All_Chapter_Cleared() const
 	return _is_All_Chapter_Cleared;
 }
 
+int Dungeon_Manager::Get_Current_Chapter_Score() const
+{
+	return _current_Chapter_Score;
+}
+
 void Dungeon_Manager::Print_Current_Chapter() const
 {
-	cout << "========================================"
-		<< endl;
-
+	cout << "========================================" << endl;
 	cout << "현재 입장 가능한 던전" << endl;
+	cout << Get_Chapter_Name(_current_Chapter) << endl;
+	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 
-	cout << Get_Chapter_Name(_current_Chapter)
-		<< endl;
+	if (Check_Tutor_Challenge_Available())
+	{
+		cout << "튜터 도전 가능" << endl;
+	}
+	else
+	{
+		cout << "튜터 도전 불가능" << endl;
+	}
 
-	cout << "========================================"
-		<< endl;
+	cout << "========================================" << endl;
 }
 
 void Dungeon_Manager::Run_Current_Chapter
 (
 	Player* player,
-	Inventory& inventory
+	Inventory<Item>& inventory
 )
 {
 	Monster_Type monster_Types[MONSTERS_PER_CHAPTER];
@@ -106,39 +137,19 @@ void Dungeon_Manager::Run_Current_Chapter
 
 	cout << endl;
 
-	cout << Get_Chapter_Name(_current_Chapter)
-		<< "에 입장했습니다."
-		<< endl;
+	cout << Get_Chapter_Name(_current_Chapter) << "에 입장했습니다." << endl;
 
 	for (int i = 0; i < MONSTERS_PER_CHAPTER; i++)
 	{
 		Monster monster(monster_Types[i]);
 
 		cout << endl;
-		cout << "========================================"
-			<< endl;
-
-		cout << i + 1
-			<< "번째 몬스터 등장"
-			<< endl;
-
-		cout << monster.getName()
-			<< "이(가) 나타났습니다!"
-			<< endl;
-
-		cout << "========================================"
-			<< endl;
+		cout << "========================================" << endl;
+		cout << i + 1 << "번째 몬스터 등장" << endl;
+		cout << monster.getName() << "이(가) 나타났습니다!" << endl;
+		cout << "========================================" << endl;
 
 		monster.Print_Monster_Info();
-
-		// 현재는 공격 문구가 정상적으로 저장됐는지
-		// 확인하기 위한 테스트 출력임
-		cout << "[공격 문구 확인]" << endl;
-
-		monster.Print_Attack_Message();
-
-		cout << endl;
-
 		Battle
 		(
 			player,
@@ -148,32 +159,44 @@ void Dungeon_Manager::Run_Current_Chapter
 
 		if (player->getHp() <= 0)
 		{
-			cout << "챕터 공략에 실패했습니다."
-				<< endl;
+			cout << "플레이어가 쓰러졌습니다." << endl;
 
-			cout << "다시 입장하면 첫 번째 몬스터부터 "
-				<< "시작합니다."
-				<< endl;
+			cout << "던전 공략을 종료합니다." << endl;
 
 			return;
 		}
 
 		if (monster.getHP() > 0)
 		{
-			cout << "몬스터를 처치하지 못했습니다."
-				<< endl;
+			cout << monster.getName() << "을(를) 처치하지 못했습니다." << endl;
 
 			return;
 		}
 
-		cout << monster.getName()
-			<< " 처치 완료!"
-			<< endl;
+		cout << monster.getName() << " 처치 완료!" << endl;
+
+		cout << "경험치 " << monster.getExpReward() << " 획득!" << endl;
+
+		Add_Chapter_Score
+		(
+			monster.getScoreReward()
+		);
+
+		if (Check_Tutor_Challenge_Available())
+		{
+			cout << endl;
+
+			cout << "튜터 도전에 필요한 점수를 달성했습니다!" << endl;
+
+			cout << "던전 메뉴에서 튜터에게 도전할 수 있습니다." << endl;
+
+			break;
+		}
 	}
 
-	// for문을 3번 모두 통과하면
-	// 몬스터 3마리를 모두 처치한 상태임
-	Clear_Current_Chapter();
+	cout << endl;
+
+	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 }
 
 void Dungeon_Manager::Get_Current_Chapter_Monsters
@@ -185,13 +208,13 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters
 	{
 	case Chapter_Type::VARIABLE_CONDITION_FOREST:
 	{
-		monster_Types[0] =
+		monster_Types[0] = 
 			Monster_Type::INT_SLIME;
 
-		monster_Types[1] =
+		monster_Types[1] = 
 			Monster_Type::BOOL_MUSHROOM;
 
-		monster_Types[2] =
+		monster_Types[2] = 
 			Monster_Type::IF_GOBLIN;
 
 		break;
@@ -269,9 +292,108 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters
 	}
 }
 
+void Dungeon_Manager::Add_Chapter_Score
+(
+	int score_Reward
+)
+{
+	if (score_Reward < 0)
+	{
+		cout << "잘못된 점수값입니다." << endl;
+
+		return;
+	}
+
+	_current_Chapter_Score += score_Reward;
+
+	cout << "처치 점수 " << score_Reward << "점을 획득했습니다." << endl;
+
+	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl; 
+
+	if (Check_Tutor_Challenge_Available())
+	{
+		cout << "튜터에게 도전할 수 있습니다!"
+			<< endl;
+	}
+}
+
+int Dungeon_Manager::Get_Required_Tutor_Score() const
+{
+	double required_Score = static_cast<double> (BASE_TUTOR_REQUIRED_SCORE);
+
+	int chapter_Number = 1;
+
+	switch (_current_Chapter)
+	{
+	case Chapter_Type::VARIABLE_CONDITION_FOREST:
+	{
+		chapter_Number = 1;
+
+		break;
+	}
+
+	case Chapter_Type::ARRAY_LOOP_OCEAN:
+	{
+		chapter_Number = 2;
+
+		break;
+	}
+
+	case Chapter_Type::FUNCTION_RUINS:
+	{
+		chapter_Number = 3;
+
+		break;
+	}
+
+	case Chapter_Type::POINTER_MEMORY_GRAVEYARD:
+	{
+		chapter_Number = 4;
+
+		break;
+	}
+
+	case Chapter_Type::OBJECT_STL_FACTORY:
+	{
+		chapter_Number = 5;
+
+		break;
+	}
+
+	default:
+	{
+		chapter_Number = 1;
+
+		break;
+	}
+	}
+
+	for (int i = 1; i < chapter_Number; i++)
+	{
+		required_Score *=
+			CHAPTER_SCORE_MULTIPLIER;
+	}
+
+	return static_cast<int>
+		(
+			required_Score + 0.5
+			);
+}
+
+bool Dungeon_Manager::Check_Tutor_Challenge_Available() const
+{
+	return
+		_current_Chapter_Score
+		>= Get_Required_Tutor_Score();
+}
+
 void Dungeon_Manager::Clear_Current_Chapter()
 {
 	cout << endl;
+
+	cout << Get_Chapter_Name(_current_Chapter)
+		<< "의 튜터를 처치했습니다!"
+		<< endl;
 
 	cout << Get_Chapter_Name(_current_Chapter)
 		<< "을(를) 클리어했습니다!"
@@ -281,10 +403,10 @@ void Dungeon_Manager::Clear_Current_Chapter()
 
 	if (_is_All_Chapter_Cleared)
 	{
-		cout << "모든 일반 챕터를 클리어했습니다!"
+		cout << "모든 챕터를 클리어했습니다!"
 			<< endl;
 
-		// TODO: 최종 보스 던전과 연결하기
+		// TODO: 최종 보스 또는 엔딩 시스템과 연결
 	}
 	else
 	{
@@ -347,6 +469,7 @@ void Dungeon_Manager::Move_Next_Chapter()
 		break;
 	}
 	}
+	_current_Chapter_Score = 0;
 }
 
 string Dungeon_Manager::Get_Chapter_Name
@@ -383,7 +506,7 @@ string Dungeon_Manager::Get_Chapter_Name
 
 	default:
 	{
-		return "모든 일반 챕터 클리어";
+		return "모든 챕터 클리어";
 	}
 	}
 }

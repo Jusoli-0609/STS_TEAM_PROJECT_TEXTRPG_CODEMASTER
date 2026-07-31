@@ -36,6 +36,14 @@ enum class Monster_Type
     VECTOR_DRONE
 };
 
+enum class Monster_Grade
+{
+    NORMAL,
+    ELITE,
+    TUTODBR,
+    FINAL_BOSS
+};
+
 enum Monster_Stat_Index
 {
     MONSTER_HP,
@@ -50,8 +58,7 @@ class Monster
 {
 public:
     Monster();
-
-    explicit Monster(Monster_Type monster_Type);
+    Monster(Monster_Type monster_Type);
 
     Monster
     (
@@ -69,11 +76,25 @@ public:
     int getPower() const;
     int getDefence() const;;
     int getSpeed() const;
+    int getEvasion() const;
+    int getAccuracy() const;
+    int getExpReward() const;
+    int getScoreReward() const;
+
     std::string getDropItemName() const;
     int getDropItemPrice() const;
+    int getDropItemCount() const;
+    int getGoldReward() const;
 
     Monster_Type getMonsterType() const;
     Chapter_Type getChapterType() const;
+
+    Monster_Grade getMonsterGrade() const;
+
+    void setMonsterGrade
+    (
+        Monster_Grade monster_Grade
+    );
 
     std::string getAttackMessage() const;
 
@@ -81,19 +102,33 @@ public:
     void attack(Player* player)const;
     void Print_Monster_Info() const;
     void Print_Attack_Message() const;
+    void Generate_Drop_Reward();
 
 private:
     void Initialize_Monster(Monster_Type monster_Type);
 
+    std::string Get_Code_Fragment_Name() const;
+    int Calculate_Gold_Reward() const;
+    int Calculate_Exp_Reward() const;
+    int Calculate_Score_Reward() const;
+    int Get_Chapter_Number() const;
+
     Monster_Type _monster_Type;
     Chapter_Type _chapter_Type;
+    Monster_Grade _monster_Grade;
 
     std::string _monster_Name;
     int _stat[MONSTER_STAT_COUNT];
+    int _evasion;
+    int _accuracy;
+    int _exp_Reward;
+    int _score_Reward;
 
     std::string _attack_Message;
 
     // 아이템관련 : 윤재님이랑 연결한 후 수정하기
     std::string _drop_Item_Name;
     int _drop_Item_Price;
+    int _drop_Item_Count;
+    int _gold_Reward;
 };

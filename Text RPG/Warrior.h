@@ -1,10 +1,10 @@
 #pragma once
-#include "Player.h"		//나는 Player를 기반으로 만들어진 클래스라는 선언
+#include "Player.h"
 
 class Warrior : public Player
 {
 public:
-    Warrior(std::string name, int hp, int mp, int power, int defence);
+    Warrior(const std::string& name, const int stat[]);
 
-    void attack() override;
+    void attack(Monster* monster) override;
 };

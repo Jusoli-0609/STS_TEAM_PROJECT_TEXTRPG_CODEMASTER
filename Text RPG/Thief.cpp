@@ -1,15 +1,17 @@
 #include "Thief.h"
-#include <string>
+#include "Monster.h"
 #include <iostream>
 
-Thief::Thief(std::string name, int hp, int mp, int power, int defence)
-    : Player(name, hp, mp, power, defence)
+Thief::Thief(const std::string& name, const int stat[])
+    : Player(name, stat)
 {
     job = "도적";
-    this->power += 30;
+    atk += 30;
 }
 
-void Thief::attack()
+void Thief::attack(Monster* monster)
 {
+    (void)monster;
+
     std::cout << name << "이(가) 표창을 던진다!" << std::endl;
 }

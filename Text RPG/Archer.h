@@ -4,7 +4,7 @@
 class Archer : public Player
 {
 public:
-    Archer(std::string name, int hp, int mp, int power, int defence);
+    Archer(std::string name, const int stat[]);
 
-    void attack() override;
+    void attack(Monster* monster) override;
 };

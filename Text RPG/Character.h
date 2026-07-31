@@ -8,3 +8,4 @@ void InputHPMP(int stat[]);
 void Inputstats(int stat[]);
 void PrintStatus(std::string& name, int stat[]);
 void ChoiceJob(std::string& name, int stat[], Player*& player);
+void Upgrade(std::string&, int stat[], Inventory<Item>&);
