@@ -7,7 +7,7 @@ using namespace std;
 // 전투 시작
 //======================================================
 
-void Battle(Player* player, Monster& monster, Inventory& inventory)
+void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
 
     if (player == nullptr)
@@ -77,7 +77,7 @@ void Show_Battle_End(Player* player, Monster& monster)
 // 플레이어 턴
 //======================================================
 
-void Player_Turn(Player* player, Monster& monster, Inventory& inventory)
+void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
     //플레이어 차례 (JRPG 턴 개념)
 
@@ -117,7 +117,7 @@ void Player_Turn(Player* player, Monster& monster, Inventory& inventory)
     }
 }
 
-void Item(Player* player, Inventory& inventory)
+void Item(Player* player, Inventory<Item>& inventory)
 {
     // 인벤토리 아이템
 
@@ -133,7 +133,7 @@ void Attack(Player* player, Monster& monster)
 
     int Before_Monster_HP = monster.getHP();
 
-    int Damage = player->getPower() - monster.getDefence();
+    int Damage = player->Get_ATK() - monster.getDefence();
 
     if (Damage < 1)
     {
@@ -190,16 +190,16 @@ void Monster_Turn(Player* player, Monster& monster)
 
 void Monster_Attack(Player* player, Monster& monster)
 {
-    int Before_Player_HP = player->getHp();
+    int Before_Player_HP = player->Get_Hp();
 
-    int Damage = monster.getPower() - player->getDefence();
+    int Damage = monster.getPower() - player->Get_DEF();
 
     if (Damage < 1)
     {
         Damage = 1;
     }
 
-    player->setHp(Before_Player_HP - Damage);
+    player->Set_Hp(Before_Player_HP - Damage);
 
     cout << monster.getName()
         << "의 공격!" << endl;
@@ -207,7 +207,7 @@ void Monster_Attack(Player* player, Monster& monster)
     cout << "플레이어 HP : "
         << Before_Player_HP
         << " -> "
-        << player->getHp()
+        << player->Get_Hp()
         << endl;
 }
 
@@ -239,7 +239,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
         return true;
     }
 
-    if (player->getHp() <= 0)
+    if (player->Get_Hp() <= 0)
     {
         cout << endl;
         cout << "전투 패배!" << endl;

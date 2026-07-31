@@ -2,11 +2,11 @@
 #include <string>
 #include <iostream>
 
-Magician::Magician(std::string name, int hp, int mp, int power, int defence)
-    : Player(name, hp, mp, power, defence)
+Magician(std::string name, const int stat[])
+    : Player(name, stat)
 {
     job = "¸¶¹ý»ç";
-    this->mp += 30;
+    mp += 30;
 }
 
 void Magician::attack()

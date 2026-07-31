@@ -2,14 +2,17 @@
 #include <string>
 #include <iostream>
 
-Archer::Archer(std::string name, int hp, int mp, int power, int defence)
-    : Player(name, hp, mp, power, defence)
+Archer::Archer(std::string name, const int stat[])
+    : Player(name, stat)
 {
     job = "궁수";
-    this->hp += 30;
+    hp += 30;
 }
 
-void Archer::attack()
+void Archer::attack(Monster* monster)
 {
-    std::cout << name << "이(가) 화살을 발사한다!" << std::endl;
+    std::cout
+        << name
+        << "이 화살을 발사했다!"
+        << std::endl;
 }

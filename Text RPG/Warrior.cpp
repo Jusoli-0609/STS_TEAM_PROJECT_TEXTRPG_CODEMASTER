@@ -2,11 +2,11 @@
 #include <string>
 #include <iostream>
 
-Warrior::Warrior(std::string name, int hp, int mp, int power, int defence)
-    : Player(name, hp, mp, power, defence)
+Warrior::Warrior(std::string name, const int stat[])
+    : Player(name, stat)
 {
     job = "ภüป็";
-    this->defence += 30;
+    def += 30;
 }
 
 void Warrior::attack()

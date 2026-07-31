@@ -41,7 +41,7 @@ Inventory<T>& Inventory<T>:: operator=(const Inventory& other)//대입 연산자, 다�
     _Inventory_Items = new T[_Max_Inventory_Size];
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
-        _Inventory_Items[i] = _Inventory_Items[i];
+        _Inventory_Items[i] = other._Inventory_Items[i];
     }
     return *this;
 }
@@ -51,7 +51,7 @@ int Inventory<T>::Get_Total_Weight()const // 인벤토리 총 무게 함수
     int Total_Weight = 0;
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
-        Total_Weight += _Inventory_Items[i].Item_Weight * _Inventory_Items[i].Item_Count;
+        Total_Weight += _Inventory_Items[i]._Item_Weight * _Inventory_Items[i]._Item_Count;
     }
     return Total_Weight;
 }
@@ -67,7 +67,7 @@ T* Inventory<T>::Get_Item_By_Index(int index)//인벤토리 Index  가져오기
 template<typename T>
 int Inventory<T>::GetSize()const//인벤토리 사이즈 가져오기
 {
-    reutrn _Current_Quantity_Of_Items;
+    return _Current_Quantity_Of_Items;
 }
 template <typename T>
 void Inventory<T>::Use_Item_In_Battle(Player& player)
@@ -86,3 +86,59 @@ Inventory<T>::~Inventory()//인벤토리 소멸자
 }
 
 template class Inventory<Item>; // 명시적 인스턴스화
+
+
+// ================== 임시구현 ================
+
+template<typename T>
+int Inventory<T>::GetCapacity() const
+{
+    return _Max_Capacity;
+}
+
+template<typename T>
+void Inventory<T>::PrintInventory() const
+{
+}
+
+template<typename T>
+void Inventory<T>::PrintInventoryMenu()
+{
+}
+
+template<typename T>
+bool Inventory<T>::AddOrIncreaseItem(const T& newItem)
+{
+    return true;
+}
+
+template<typename T>
+bool Inventory<T>::UseItemByName(const std::string& itemName)
+{
+    return true;
+}
+
+template<typename T>
+void Inventory<T>::ThrowAwayItem()
+{
+}
+
+template<typename T>
+void Inventory<T>::RemoveLastItem()
+{
+}
+
+template<typename T>
+void Inventory<T>::SortInventory()
+{
+}
+
+template<typename T>
+void Inventory<T>::ChangeInventoryOrder()
+{
+}
+
+template<typename T>
+void Inventory<T>::FirstTimeSizeUp(int NewCapacity)
+{
+}

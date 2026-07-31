@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Battle_System.h"
-#include "AlchemyWorkshop.h"
+#include "Craft_Item.h"
 #include "DungeonManager.h"
 #include <iostream>
 #include <string>
@@ -15,7 +15,7 @@ void PrintLine()
 	cout << string(50, '=') << endl;
 }
 
-void OpenInventory(const Inventory& inventory)
+void OpenInventory(const Inventory<Item>& inventory)
 {
     cout << "===== 인벤토리 =====" << endl;
 
@@ -85,7 +85,7 @@ int main()
     CreateCharacter(name, stat);
     PrintStatus(name, stat);
 
-    Inventory inventory;
+    Inventory<Item> inventory(30,100);
     AlchemyWorkshop workshop;
 
     Dungeon_Manager dungeon_Manager;

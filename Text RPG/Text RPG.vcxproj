@@ -133,6 +133,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Job_Selection.cpp" />
+    <ClCompile Include="JYJ.cpp" />
     <ClCompile Include="Level_Up.cpp" />
     <ClCompile Include="Magician.cpp" />
     <ClCompile Include="Main.cpp" />

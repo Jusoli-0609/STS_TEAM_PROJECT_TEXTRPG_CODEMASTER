@@ -15,7 +15,7 @@ public:
 	void Open_Dungeon
 	(
 		Player* player,
-		Inventory& inventory
+		Inventory<Item>& inventory
 	);
 
 	bool Check_All_Chapter_Cleared() const;
@@ -26,7 +26,7 @@ private:
 	void Run_Current_Chapter
 	(
 		Player* player,
-		Inventory& inventory
+		Inventory<Item>& inventory
 	);
 
 	void Get_Current_Chapter_Monsters

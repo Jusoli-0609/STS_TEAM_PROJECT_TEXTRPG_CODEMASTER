@@ -1,5 +1,5 @@
 #include "DungeonManager.h"
-#include "Battle.h"
+#include "Battle_System.h"
 #include <iostream>
 
 using namespace std;
@@ -16,7 +16,7 @@ Dungeon_Manager::Dungeon_Manager()
 void Dungeon_Manager::Open_Dungeon
 (
 	Player* player,
-	Inventory& inventory
+	Inventory<Item>& inventory
 )
 {
 	if (player == nullptr)
@@ -97,7 +97,7 @@ void Dungeon_Manager::Print_Current_Chapter() const
 void Dungeon_Manager::Run_Current_Chapter
 (
 	Player* player,
-	Inventory& inventory
+	Inventory<Item>& inventory
 )
 {
 	Monster_Type monster_Types[MONSTERS_PER_CHAPTER];

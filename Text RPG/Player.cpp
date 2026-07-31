@@ -64,14 +64,23 @@ void Player::Level_Up()
 
     exp -= maxexp;
 
-    ::Level_Up::levelup(this);
+    // ============================= 잠시 임시 구현====================
+
+    level++;
+
+    hp += 20;
+    mp += 10;
+    atk += 5;
+    def += 3;
+
+    maxexp = static_cast<int>(maxexp * 1.5);
 
     cout << name << "이(가) 레벨업!\n";
     cout << "현재 레벨: " << level << endl;
 
     Print_Status();
 }
-
+    //==========================================================================
 std::string Player::Get_Name() const
 {
     return name;
@@ -81,6 +90,30 @@ std::string Player::Get_Job() const
 {
     return job;
 }
+
+// ===========================================
+
+int Player::getHp() const
+{
+    return Get_Hp();
+}
+
+int Player::getMp() const
+{
+    return Get_Mp();
+}
+
+int Player::getPower() const
+{
+    return Get_ATK();
+}
+
+int Player::getDefence() const
+{
+    return Get_DEF();
+}
+
+// ===========================================
 
 int Player::Get_Level() const
 {
@@ -126,6 +159,35 @@ int Player::Get_Exp() const
 {
     return exp;
 }
+
+// ==================================================
+
+void Player::setHp(int hp)
+{
+    Set_Hp(hp);
+}
+
+void Player::setMp(int mp)
+{
+    Set_Mp(mp);
+}
+
+void Player::setPower(int atk)
+{
+    Set_ATK(atk);
+}
+
+void Player::setDefence(int def)
+{
+    Set_DEF(def);
+}
+
+void Player::printPlayerStatus() const
+{
+    Print_Status();
+}
+
+// =================================================
 
 void Player::Set_Hp(int newHp)
 {

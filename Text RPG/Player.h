@@ -33,6 +33,12 @@ public:
     std::string Get_Name() const;
     std::string Get_Job() const;
 
+
+    int getHp() const;
+    int getMp() const;
+    int getPower() const;
+    int getDefence() const;
+
     int Get_Level() const;
     int Get_Hp() const;
     int Get_Mp() const;
@@ -42,6 +48,11 @@ public:
     int Get_SNE() const;
     int Get_AGI() const;
     int Get_Exp() const;
+
+    void setHp(int hp);
+    void setMp(int mp);
+    void setPower(int atk);
+    void setDefence(int def);
 
     void Set_Hp(int hp);
     void Set_Mp(int mp);
@@ -55,4 +66,6 @@ public:
 
     void Gain_Exp(int amount);
     void Level_Up();
+
+    void printPlayerStatus() const;
 };
