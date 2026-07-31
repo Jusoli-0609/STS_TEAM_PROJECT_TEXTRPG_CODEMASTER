@@ -25,7 +25,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
 
         cout << "체력을 회복해 현재 체력은 "
             << player.Get_Hp()
-            << "입니다."
+            << "이다."
             << endl;
 
         return true;
@@ -36,7 +36,7 @@ bool Item::Item_Effect(Player& player, Monster& monster)
 
         cout << "마나를 회복해 현재 마나는 "
             << player.Get_Mp()
-            << "입니다."
+            << "이다."
             << endl;
 
         return true;

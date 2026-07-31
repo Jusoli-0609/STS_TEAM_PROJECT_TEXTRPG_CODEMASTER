@@ -51,13 +51,13 @@ Inventory<T>& Inventory<T>::operator=(const Inventory<T>& other)//(다른 Inventor
     _Inventory_Items = new T[_Max_Inventory_Size];
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
     {
-        _Inventory_Items[i] =other._Inventory_Items[i];
+        _Inventory_Items[i] = other._Inventory_Items[i];
     }
     return *this;
 }
 
 template<typename T>//3-1 인벤토리 총 무게 함수
-int Inventory<T>::Get_Total_Weight()const 
+int Inventory<T>::Get_Total_Weight()const
 {
     int Total_Weight = 0;
     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
@@ -90,21 +90,21 @@ int Inventory<T>::Get_Capacity() const
 }
 
 template <typename T>//4-1 인벤토리 및 내용물 출력
-void Inventory<T>::Print_Inventory() const 
+void Inventory<T>::Print_Inventory() const
 {
-     cout << "===== 인벤토리 =====" << endl;
-     int  Inventory_Order_Index = 1;
-     for (int i = 0; i < _Current_Quantity_Of_Items; i++)
-     {
+    cout << "===== 인벤토리 =====" << endl;
+    int  Inventory_Order_Index = 1;
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
 
-         cout << Inventory_Order_Index << ".";
-         _Inventory_Items[i].Print_Info();
-         Inventory_Order_Index++;
-     }
+        cout << Inventory_Order_Index << ".";
+        _Inventory_Items[i].Print_Info();
+        Inventory_Order_Index++;
+    }
     cout << " 현재 무게  : " <<
-    Get_Total_Weight() << "최대 허용 무게  : " <<
-    _Max_Capacity << " 남은 허용 무게  : " <<
-    _Max_Capacity - Get_Total_Weight() << endl;
+        Get_Total_Weight() << "최대 허용 무게  : " <<
+        _Max_Capacity << " 남은 허용 무게  : " <<
+        _Max_Capacity - Get_Total_Weight() << endl;
 }
 
 template <typename T>//4-2 인벤토리 메뉴 출력
@@ -121,35 +121,35 @@ void Inventory<T>::Print_Inventory_Menu()
     cin >> Choose_Inventory_Menu;
     switch (Choose_Inventory_Menu)
     {
-        case 1:
-        {
-            Print_Inventory();
-            break;
-        }
-        case 2:
-        {
-            Sort_Inventory();
-            break;
-         }
+    case 1:
+    {
+        Print_Inventory();
+        break;
+    }
+    case 2:
+    {
+        Sort_Inventory();
+        break;
+    }
 
-        case 3:
-        {
-            Change_Inventory_Order();
-            break;
-        }
-        case 4:
-        {
-            Throw_Away_Item();
-            break;
-        }
-        case 0:
-        {
-            return;
-        }
-        default:
-        {
-            break;
-        }
+    case 3:
+    {
+        Change_Inventory_Order();
+        break;
+    }
+    case 4:
+    {
+        Throw_Away_Item();
+        break;
+    }
+    case 0:
+    {
+        return;
+    }
+    default:
+    {
+        break;
+    }
     }
 }
 
@@ -158,9 +158,9 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
 {
     int New_Item_Weight = new_item._Item_Weight * new_item._Item_Count;
     T* Found_Item = nullptr;  //  같은 아이템을 가리킬 포인터 변수 선언
-    for(int i=0; i<_Current_Quantity_Of_Items;i++)//순회 반복문
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)//순회 반복문
     {
-        if(_Inventory_Items[i]._Item_Name == new_item._Item_Name)
+        if (_Inventory_Items[i]._Item_Name == new_item._Item_Name)
         {
             Found_Item = &_Inventory_Items[i];//foundItem에 현재 item의 주소 저장
             break;
@@ -174,27 +174,27 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
         cout << "2. 취소" << endl;
         int Choose_Item_To_Get_Rid_Of;
         cin >> Choose_Item_To_Get_Rid_Of;
-        if (Choose_Item_To_Get_Rid_Of==1)
+        if (Choose_Item_To_Get_Rid_Of == 1)
         {
             Throw_Away_Item();
             Found_Item = nullptr;
-            for(int i=0; i<_Current_Quantity_Of_Items;i++)
+            for (int i = 0; i < _Current_Quantity_Of_Items; i++)
             {
                 if (_Inventory_Items[i]._Item_Name == new_item._Item_Name)
                 {
                     Found_Item = &_Inventory_Items[i]; //댕글링 포인터 방지
                     break;
                 }
-            }      
+            }
         }
-        else if(Choose_Item_To_Get_Rid_Of==2)
+        else if (Choose_Item_To_Get_Rid_Of == 2)
         {
             return false;
         }
         else
         {
             cout << "잘못된 입력이다!" << endl;
-        }       
+        }
     }
     if (Found_Item != nullptr)
     {
@@ -209,18 +209,18 @@ bool Inventory<T>::Add_Or_Increase_Item(const T& new_item)
         cout << "2. 취소" << endl;
         int Choose_Item_To_Get_Rid_Of;
         cin >> Choose_Item_To_Get_Rid_Of;
-        if (Choose_Item_To_Get_Rid_Of==1)
+        if (Choose_Item_To_Get_Rid_Of == 1)
         {
-            Throw_Away_Item();        
+            Throw_Away_Item();
         }
-        else if(Choose_Item_To_Get_Rid_Of==2)
+        else if (Choose_Item_To_Get_Rid_Of == 2)
         {
             return false;
         }
         else
         {
-            cout << "잘못된 입력이다!" << endl;    
-        }    
+            cout << "잘못된 입력이다!" << endl;
+        }
     }
     _Inventory_Items[_Current_Quantity_Of_Items] = new_item;
     _Current_Quantity_Of_Items++;
@@ -251,11 +251,11 @@ bool Inventory<T>::Use_Item_By_Name(const string& item_name)
             return false;
         }
     }
-    return false; 
+    return false;
 }
 
 template <typename T>//5-3 전투 중 아이템 사용
-void Inventory<T>::Use_Item_In_Battle(Player& player,Monster& monster)
+void Inventory<T>::Use_Item_In_Battle(Player& player, Monster& monster)
 {
     if (_Current_Quantity_Of_Items == 0)
     {
@@ -296,7 +296,7 @@ void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
         return;
     }
     Print_Inventory();
-    int Random_Item_use=rand()%_Current_Quantity_Of_Items;
+    int Random_Item_use = rand() % _Current_Quantity_Of_Items;
     T* selected_item = Get_Item_By_Index(Random_Item_use); //  GetItemByIndex 호출 결과를 저장할 Item 포인터 변수 선언
     if (selected_item == nullptr)
     {
@@ -306,22 +306,24 @@ void Inventory<T>::Use_Random_Item_In_Battle(Player& player, Monster& monster)
     if (selected_item->_Item_Type_Usable == true)
     {
         selected_item->Item_Effect(player, monster);
-            Use_Item_By_Name(selected_item_name);
+        Use_Item_By_Name(selected_item_name);
         return;
     }
     else
     {
-        int Mental_Damage = Get_Hp(player) const - 100;
+        int Mental_Damage = 100;
         cout << "사용할 수 없는 아이템이다!" << endl;
         cout << "안타까운 일입니다!" << endl;
         cout << "운이 없는 당신을 주님이 비웃는다!" << endl;
         cout << "정신적인 고통을 받는다! 데미지를 " << Mental_Damage << "만큼 받는다!" << endl;
+        player.Set_Hp(player.Get_Hp() - Mental_Damage);
         return;
     }
 }
 template<typename T>//8.인벤토리 소멸자
 Inventory<T>::~Inventory()
 {
+    delete[] _Inventory_Items;
     delete[] _Inventory_Items;
     _Inventory_Items = nullptr;
 }
