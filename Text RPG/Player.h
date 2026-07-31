@@ -26,18 +26,17 @@ public:
 
     virtual ~Player() {}
 
+    // 직업마다 구현
     virtual void attack(Monster* monster) = 0;
+
+    //==========================
+    // 기존 함수
+    //==========================
 
     void Print_Status() const;
 
     std::string Get_Name() const;
     std::string Get_Job() const;
-
-
-    int getHp() const;
-    int getMp() const;
-    int getPower() const;
-    int getDefence() const;
 
     int Get_Level() const;
     int Get_Hp() const;
@@ -48,11 +47,6 @@ public:
     int Get_SNE() const;
     int Get_AGI() const;
     int Get_Exp() const;
-
-    void setHp(int hp);
-    void setMp(int mp);
-    void setPower(int atk);
-    void setDefence(int def);
 
     void Set_Hp(int hp);
     void Set_Mp(int mp);
@@ -67,5 +61,67 @@ public:
     void Gain_Exp(int amount);
     void Level_Up();
 
-    void printPlayerStatus() const;
+    //==========================
+    // Battle_System 호환 함수
+    //==========================
+
+    std::string getName() const
+    {
+        return Get_Name();
+    }
+
+    std::string getJob() const
+    {
+        return Get_Job();
+    }
+
+    int getHp() const
+    {
+        return Get_Hp();
+    }
+
+    int getMp() const
+    {
+        return Get_Mp();
+    }
+
+    int getPower() const
+    {
+        return Get_ATK();
+    }
+
+    int getDefence() const
+    {
+        return Get_DEF();
+    }
+
+    int getLevel() const
+    {
+        return Get_Level();
+    }
+
+    void setHp(int value)
+    {
+        Set_Hp(value);
+    }
+
+    void setMp(int value)
+    {
+        Set_Mp(value);
+    }
+
+    void setPower(int value)
+    {
+        Set_ATK(value);
+    }
+
+    void setDefence(int value)
+    {
+        Set_DEF(value);
+    }
+
+    void printPlayerStatus() const
+    {
+        Print_Status();
+    }
 };

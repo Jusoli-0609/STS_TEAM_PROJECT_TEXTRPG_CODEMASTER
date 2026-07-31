@@ -5,6 +5,8 @@
 #include "Battle_System.h"
 #include "Craft_Item.h"
 #include "DungeonManager.h"
+#include "Console_Manager.h"
+
 #include <iostream>
 #include <string>
 

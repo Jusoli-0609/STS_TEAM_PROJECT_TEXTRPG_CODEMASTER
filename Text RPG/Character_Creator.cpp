@@ -1,14 +1,15 @@
 ﻿#include <iostream>
 #include <string>
+
 #include "Character_Creator.h"
 #include "Player.h"
 #include "Job_Selection.h"
 using namespace std;
 
 Player* Character_Creator()
-{	
-	const int SIZE = 7
-	int stat[SIZE] = [100, 100, 20, 20, 20, 20, 20];
+{
+	const int SIZE = 7;
+	int stat[SIZE] = {100, 100, 20, 20, 20, 20, 20};
 
 	string name;
 

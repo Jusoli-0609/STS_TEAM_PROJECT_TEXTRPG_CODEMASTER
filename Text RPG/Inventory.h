@@ -5,7 +5,8 @@
 	#include <vector>
 
 	#include "Item.h"
-	#include "Player.h"
+	
+class Player; // 일단 추가
 
 	template <typename T>
 	class Inventory

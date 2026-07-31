@@ -1,4 +1,5 @@
 #include "Battle_System.h"
+#include "Item.h"
 #include <iostream>
 
 using namespace std;
@@ -103,7 +104,7 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
 
     case ITEM:
     {
-        Item(player, inventory);
+        Use_Item(player, inventory);
         break;
     }
 
@@ -117,7 +118,7 @@ void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory)
     }
 }
 
-void Item(Player* player, Inventory<Item>& inventory)
+void Use_Item(Player* player, Inventory<Item>& inventory)
 {
     // 인벤토리 아이템
 
@@ -228,7 +229,7 @@ void Monster_Skill(Player* player, Monster& monster)
 // 전투 종료
 //======================================================
 
-bool Check_Battle_End(Player* player, Monster& monster, Inventory& inventory)
+bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& inventory)
 {
     if (monster.getHP() <= 0)
     {

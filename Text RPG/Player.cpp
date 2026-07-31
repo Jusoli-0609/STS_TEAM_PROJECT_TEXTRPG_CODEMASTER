@@ -3,13 +3,13 @@
 
 #include "Player.h"
 #include "Level_Up.h"
-#include "Player_Stat_index.h"
+#include "Player_Stat_Index.h"
 
 using namespace std;
 
 Player::Player(const std::string& name, const int stat[])
     : name(name),
-    job("미선택"),
+    job("None"),
     hp(stat[P_Hp]),
     mp(stat[P_Mp]),
     atk(stat[P_ATK]),
@@ -91,30 +91,6 @@ std::string Player::Get_Job() const
     return job;
 }
 
-// ===========================================
-
-int Player::getHp() const
-{
-    return Get_Hp();
-}
-
-int Player::getMp() const
-{
-    return Get_Mp();
-}
-
-int Player::getPower() const
-{
-    return Get_ATK();
-}
-
-int Player::getDefence() const
-{
-    return Get_DEF();
-}
-
-// ===========================================
-
 int Player::Get_Level() const
 {
     return level;
@@ -159,35 +135,6 @@ int Player::Get_Exp() const
 {
     return exp;
 }
-
-// ==================================================
-
-void Player::setHp(int hp)
-{
-    Set_Hp(hp);
-}
-
-void Player::setMp(int mp)
-{
-    Set_Mp(mp);
-}
-
-void Player::setPower(int atk)
-{
-    Set_ATK(atk);
-}
-
-void Player::setDefence(int def)
-{
-    Set_DEF(def);
-}
-
-void Player::printPlayerStatus() const
-{
-    Print_Status();
-}
-
-// =================================================
 
 void Player::Set_Hp(int newHp)
 {

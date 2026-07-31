@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Inventory.h"
+#include "Item.h"
 
 using namespace std;
 
@@ -99,6 +100,12 @@ int Inventory<T>::GetCapacity() const
 template<typename T>
 void Inventory<T>::PrintInventory() const
 {
+    std::cout << "===== Inventory =====" << std::endl;
+
+    for (int i = 0; i < _Current_Quantity_Of_Items; i++)
+    {
+        _Inventory_Items[i].PrintInfo();
+    }
 }
 
 template<typename T>
@@ -109,13 +116,19 @@ void Inventory<T>::PrintInventoryMenu()
 template<typename T>
 bool Inventory<T>::AddOrIncreaseItem(const T& newItem)
 {
+    if (_Current_Quantity_Of_Items >= _Max_Inventory_Size)
+        return false;
+
+    _Inventory_Items[_Current_Quantity_Of_Items] = newItem;
+    _Current_Quantity_Of_Items++;
+
     return true;
 }
 
 template<typename T>
-bool Inventory<T>::UseItemByName(const std::string& itemName)
+bool Inventory<T>::UseItemByName(const std::string& ItemName)
 {
-    return true;
+    return false;
 }
 
 template<typename T>
@@ -126,6 +139,8 @@ void Inventory<T>::ThrowAwayItem()
 template<typename T>
 void Inventory<T>::RemoveLastItem()
 {
+    if (_Current_Quantity_Of_Items > 0)
+        _Current_Quantity_Of_Items--;
 }
 
 template<typename T>
@@ -141,4 +156,5 @@ void Inventory<T>::ChangeInventoryOrder()
 template<typename T>
 void Inventory<T>::FirstTimeSizeUp(int NewCapacity)
 {
+    _Max_Capacity = NewCapacity;
 }

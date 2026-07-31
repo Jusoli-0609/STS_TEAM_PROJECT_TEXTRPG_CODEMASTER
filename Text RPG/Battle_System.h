@@ -38,13 +38,13 @@ void Show_Battle_End(Player* player, Monster& monster);
 // 플레이어 턴
 // =======================
 
-void Player_Turn(Player* player, Monster& monster, Inventory<Item>& inventory);
+void Player_Turn(Player*, Monster& monster, Inventory<Item>& inventory);
 
 void Attack(Player* player, Monster& monster);
 
 void Skill(Player* player, Monster& monster);
 
-void Item(Player* player, Inventory<Item>& inventory);
+void Use_Item(Player* player, Inventory<Item>& inventory);
 
 // =======================
 // 몬스터 턴

@@ -138,7 +138,9 @@ void ChoiceJob(string& name, int stat[], Player*& player)
 		player = new Warrior(name, stat);
 
 		cout << "* 전사로 전직하였습니다. (방어력 +30)" << endl;
-		player->attack();
+
+		
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
@@ -148,7 +150,9 @@ void ChoiceJob(string& name, int stat[], Player*& player)
 		player = new Magician(name, stat);
 
 		cout << "* 마법사로 전직하였습니다. (MP +30)" << endl;
-		player->attack();
+
+		
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
@@ -158,7 +162,8 @@ void ChoiceJob(string& name, int stat[], Player*& player)
 		player = new Thief(name, stat);
 
 		cout << "* 도적으로 전직하였습니다. (공격력 +30)" << endl;
-		player->attack();
+
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
@@ -167,7 +172,8 @@ void ChoiceJob(string& name, int stat[], Player*& player)
 		player = new Archer(name, stat);
 
 		cout << "* 궁수로 전직하였습니다. (HP +30)" << endl;
-		player->attack();
+
+		// player->attack();
 		player->printPlayerStatus();
 
 		break;
