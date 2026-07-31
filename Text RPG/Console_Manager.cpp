@@ -1,5 +1,6 @@
 #include "Console_Manager.h"
 
+
 Console_Manager::Console_Manager()
 {
     _width = 120;
