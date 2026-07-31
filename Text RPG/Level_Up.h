@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Player; // 전방 선언
 
@@ -10,16 +11,15 @@ private:
     int _max_exp;
     int _stat_points;
 
-    void LevelUpProcess(Player* player);
-
 public:
     Level_Up();
-    ~Level_Up(); // <- 소멸자도 맞춰주면 좋다.
+    ~Level_Up();
 
-    int GetCurrentLevel() const;
-    int GetCurrentExp() const;
-    int GetMaxExp() const;
-    int GetStatPoints() const; // <- 스탯 포인트 반환 함수 추가!
+    int GetCurrentLevel() const { return _current_level; }
+    int GetCurrentExp() const { return _current_exp; }
+    int GetMaxExp() const { return _max_exp; }
+    int GetStatPoints() const { return _stat_points; }
 
     void GainExp(Player* player, int amount);
+    void ProcessLevelUp(Player* player);
 };

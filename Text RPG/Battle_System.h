@@ -28,7 +28,7 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory);
 
 void Show_Battle_Start(Player* player, Monster& monster);
 
-void Show_Battle_Status(Player* player, Monster& monster);
+void Show_Battle_Status(Player* player, Monster& monster, int turnCount);
 
 void Show_Battle_Menu();
 
@@ -50,7 +50,7 @@ void Use_Item(Player* player, Inventory<Item>& inventory);
 // 몬스터 턴
 // =======================
 
-void Monster_Turn(Player* player, Monster& monster);
+void Monster_Turn(Player* player, Monster& monster, int turnCount);
 
 void Monster_Attack(Player* player, Monster& monster);
 

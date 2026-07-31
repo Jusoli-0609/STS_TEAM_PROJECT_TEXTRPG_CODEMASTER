@@ -16,6 +16,8 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
         return;
     }
 
+    int turnCount = 1;
+
     Show_Battle_Start(player, monster);
 
     while (true)
@@ -29,12 +31,14 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
             break;
         }
 
-        Monster_Turn(player, monster);
+        Monster_Turn(player, monster, turnCount);
 
         if (Check_Battle_End(player, monster, inventory))
         {
             break;
         }
+
+        turnCount++;
     }
 
     Show_Battle_End(player, monster);
@@ -46,12 +50,43 @@ void Battle(Player* player, Monster& monster, Inventory<Item>& inventory)
 
 void Show_Battle_Start(Player* player, Monster& monster)
 {
-    // UI 전투 시작
+    cout << endl;
+    cout << "==================================" << endl;
+    cout << "          전투 시작!" << endl;
+    cout << "==================================" << endl;
+
+    cout << player->Get_Name()
+        << " VS "
+        << monster.getName()
+        << endl;
+
+    cout << "==================================" << endl;
 }
 
-void Show_Battle_Status(Player* player, Monster& monster)
+void Show_Battle_Status(Player* player, Monster& monster, int turnCount)
 {
-    // UI 전투 기록
+    cout << endl;
+    cout << "==================================" << endl;
+    cout << "             "
+        << turnCount
+        << " TURN"
+        << endl;
+    cout << "==================================" << endl;
+
+
+    cout << player->Get_Name()
+        << " HP : "
+        << player->Get_Hp()
+        << endl;
+
+
+    cout << monster.getName()
+        << " HP : "
+        << monster.getHP()
+        << endl;
+
+
+    cout << "==================================" << endl;
 }
 
 void Show_Battle_Menu()
@@ -131,17 +166,21 @@ void Use_Item(Player* player, Inventory<Item>& inventory)
 
 void Attack(Player* player, Monster& monster)
 {
-
     int Before_Monster_HP = monster.getHP();
 
-    int Damage = player->Get_ATK() - monster.getDefence();
+    int Damage = player->Calculate_Damage(
+        1.0f, // ATK 계수
+        0.0f, // DEF 계수
+        0.0f, // HP 계수
+        0.0f, // MP 계수
+        0.0f, // SNE  이거 용도가????
+        0.0f, // AGI 이건 또 뭐지????
+        monster.getDefence()
+    );
 
-    if (Damage < 1)
-    {
-        Damage = 1;
-    }
 
     monster.setHP(Before_Monster_HP - Damage);
+
 
     cout << endl;
     cout << "공격!" << endl;
@@ -150,6 +189,7 @@ void Attack(Player* player, Monster& monster)
         << "에게 "
         << Damage
         << " 데미지!" << endl;
+
 
     cout << monster.getName()
         << " HP : "
@@ -172,7 +212,7 @@ void Skill(Player* player, Monster& monster)
 // 몬스터 턴
 //======================================================
 
-void Monster_Turn(Player* player, Monster& monster)
+void Monster_Turn(Player* player, Monster& monster, int turnCount)
 {
     // 몬스터 차례
 
@@ -235,10 +275,24 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
     {
         cout << endl;
         cout << "전투 승리!" << endl;
-        cout << monster.getDropItemName() << " 획득!" << endl;
+
+
+        int exp = monster.getExpReward();
+
+        player->Gain_Exp(exp);
+
+        cout << exp
+            << " 경험치를 획득했습니다."
+            << endl;
+
+
+        cout << monster.getDropItemName()
+            << " 획득!" << endl;
+
 
         return true;
     }
+
 
     if (player->Get_Hp() <= 0)
     {
@@ -247,6 +301,7 @@ bool Check_Battle_End(Player* player, Monster& monster, Inventory<Item>& invento
 
         return true;
     }
+
 
     return false;
 }
