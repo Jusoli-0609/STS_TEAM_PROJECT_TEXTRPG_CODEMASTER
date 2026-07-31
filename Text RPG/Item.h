@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 
+class Player;
+class Monster;
 class Item
 {
 public:
@@ -10,7 +12,9 @@ public:
     int _Item_Count;
     int _Item_Weight;
     bool _Item_Type_Usable;
+    bool _Item_Type_Wearable;
 
-    void PrintInfo() const;
+    void Print_Info() const;
+    bool Item_Effect(Player& player, Monster& monster);
 };
 
