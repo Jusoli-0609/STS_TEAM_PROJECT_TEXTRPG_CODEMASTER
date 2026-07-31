@@ -1,7 +1,6 @@
 #include "DungeonManager.h"
-
 #include "Battle.h"
-
+#include <cstdlib>
 #include <iostream>
 #include <limits>
 
@@ -11,6 +10,8 @@ namespace
 {
 	constexpr int BASE_TUTOR_REQUIRED_SCORE = 300;
 	constexpr double CHAPTER_SCORE_MULTIPLIER = 1.3;
+	constexpr int NORMAL_MONSTER_TYPE_COUNT = 3;
+	constexpr int ELITE_APPEARANCE_RATE = 20;
 }
 
 Dungeon_Manager::Dungeon_Manager()
@@ -32,8 +33,6 @@ void Dungeon_Manager::Open_Dungeon(Player* player, Inventory& inventory)
 	if (_is_All_Chapter_Cleared)
 	{
 		cout << "모든 일반 챕터를 클리어했습니다." << endl;
-
-		// TODO: 최종 보스 던전 연결
 
 		return;
 	}
@@ -188,101 +187,84 @@ void Dungeon_Manager::Print_Current_Chapter() const
 	cout << "========================================" << endl;
 }
 
-void Dungeon_Manager::Run_Current_Chapter
-(Player* player, Inventory& inventory)
+void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory& inventory)
 {
-	Monster_Type monster_Types
-		[MONSTERS_PER_CHAPTER];
-
-	Get_Current_Chapter_Monsters(monster_Types);
-
 	cout << endl;
-	cout << Get_Chapter_Name(_current_Chapter) << "에 입장했습니다." << endl;
+    cout << Get_Chapter_Name(_current_Chapter) << "에 입장했습니다." << endl;
 
-	Monster elite_Monster;
+	bool is_Elite_Appeared = Check_Elite_Monster_Appearance();
 
-	elite_Monster.Initialize_Elite_Monster
-	(_current_Chapter);
-
-	bool is_Correct = Run_Elite_Quiz (elite_Monster);
-
-	if (is_Correct)
+	if (is_Elite_Appeared)
 	{
-		elite_Monster.Generate_Drop_Reward();
+		Monster elite_Monster;
+		elite_Monster.Initialize_Elite_Monster(_current_Chapter);
 
-		cout << endl;
-		cout << "========================================" << endl;
-		cout << "[ 정예 몬스터 처치 보상 ]" << endl;
-		cout << "========================================" << endl;
-		cout << "획득 경험치: " << elite_Monster.getExpReward() << endl;
-		cout << "획득 챕터 점수: " << elite_Monster.getScoreReward() << endl;
-		cout << "획득 아이템: " << elite_Monster.getDropItemName() << " " << elite_Monster.getDropItemCount() << "개" << endl;
-		cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << " Gold" << endl;
+		bool is_Correct = Run_Elite_Quiz(elite_Monster);
 
-		Add_Chapter_Score
-		(elite_Monster.getScoreReward());
-	}
-	else
-	{
-		cout << endl;
-		cout << "정예 몬스터 보상을 획득하지 못했습니다." << endl;
-	}
+		if (is_Correct)
+		{
+			elite_Monster.Generate_Drop_Reward();
 
-	for
-		(
-			int monster_Index = 0;
-			monster_Index < MONSTERS_PER_CHAPTER;
-			monster_Index++
-			)
-	{
-		Monster monster
-		(monster_Types[monster_Index]);
+			cout << endl;
+			cout << "========================================" << endl;
+			cout << "[ 정예 몬스터 처치 보상 ]" << endl;
+			cout << "========================================" << endl;
+			cout << "획득 경험치: " << elite_Monster.getExpReward() << endl;
+			cout << "획득 챕터 점수: " << elite_Monster.getScoreReward() << endl;
+			cout << "획득 아이템: " << elite_Monster.getDropItemName() << " " << elite_Monster.getDropItemCount() << "개" << endl;
 
-		cout << endl;
-		cout << "========================================" << endl;
+			cout << "획득 훈련장려금: " << elite_Monster.getGoldReward() << " 원" << endl;
 
-		cout << monster_Index + 1 << "번째 일반 몬스터 등장" << endl;
-
-		cout << monster.getName() << "이(가) 나타났습니다!" << endl;
-
-		cout << "========================================" << endl;
-
-		monster.Print_Monster_Info();
-
-		Battle
-		(
-			player,
-			monster,
-			inventory
-		);
-
-		if (player->getHp() <= 0)
+			Add_Chapter_Score(elite_Monster.getScoreReward());
+		}
+		else
 		{
 			cout << endl;
-			cout << "챕터 공략에 실패했습니다." << endl;
 
-			cout << "다시 입장하면 첫 번째 몬스터부터 시작합니다." << endl;
+			cout << "코드 스니펫의 망령이 도망갔습니다." << endl;
 
-			return;
+			cout << "이번 던전에서는 보상을 획득하지 못했습니다." << endl;
 		}
-
-		if (monster.getHP() > 0)
-		{
-			cout << "몬스터를 처치하지 못했습니다." << endl;
-
-			return;
-		}
-
-		cout << endl;
-		cout<< monster.getName() << " 처치 완료!" << endl;
-
-		Add_Chapter_Score
-		(monster.getScoreReward());
+		return;
 	}
+
+	Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
+
+	Monster monster(random_Monster_Type);
 
 	cout << endl;
 	cout << "========================================" << endl;
-	cout << "현재 던전 탐색을 완료했습니다." << endl;
+	cout << "[ 일반 몬스터 등장 ]" << endl;
+	cout << monster.getName() << "이(가) 나타났습니다!" << endl;
+	cout << "========================================" << endl;
+
+	monster.Print_Monster_Info();
+
+	Battle(player, monster, inventory);
+	if (player->getHp() <= 0)
+	{
+		cout << endl;
+		cout << "던전 공략에 실패했습니다." << endl;
+		return;
+	}
+
+	if (monster.getHP() > 0)
+	{
+		cout << endl;
+		cout << "몬스터를 처치하지 못했습니다." << endl;
+
+		return;
+	}
+
+	cout << endl;
+
+	cout << monster.getName() << " 처치 완료!" << endl;
+
+	Add_Chapter_Score(monster.getScoreReward());
+
+	cout << endl;
+	cout << "========================================" << endl;
+
 	cout << "현재 챕터 점수: " << _current_Chapter_Score << " / " << Get_Required_Tutor_Score() << endl;
 
 	if (Check_Tutor_Challenge_Available())
@@ -291,7 +273,7 @@ void Dungeon_Manager::Run_Current_Chapter
 	}
 	else
 	{
-		cout << "일반 몬스터를 더 처치하여 점수를 모아야 합니다." << endl;
+		cout << "튜터 도전까지 " << Get_Required_Tutor_Score() - _current_Chapter_Score << "점 남았습니다." << endl;
 	}
 
 	cout << "========================================" << endl;
@@ -356,6 +338,26 @@ void Dungeon_Manager::Get_Current_Chapter_Monsters(Monster_Type monster_Types[])
 		break;
 	}
 	}
+}
+
+Monster_Type Dungeon_Manager::Get_Random_Normal_Monster() const
+{
+	Monster_Type monster_Types
+		[NORMAL_MONSTER_TYPE_COUNT];
+
+	Get_Current_Chapter_Monsters(monster_Types);
+
+	int random_Index = rand() % NORMAL_MONSTER_TYPE_COUNT;
+
+	return monster_Types[random_Index];
+}
+
+bool Dungeon_Manager::Check_Elite_Monster_Appearance() const
+{
+	int appearance_Roll = rand() % 100 + 1;
+
+	return
+		appearance_Roll <= ELITE_APPEARANCE_RATE;
 }
 
 Elite_Question Dungeon_Manager::Get_Elite_Question(Chapter_Type chapter_Type) const

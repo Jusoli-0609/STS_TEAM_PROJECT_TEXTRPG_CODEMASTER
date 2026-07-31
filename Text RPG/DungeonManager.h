@@ -34,8 +34,11 @@ private:
 
 	bool Run_Elite_Quiz(Monster& elite_Monster);
 
-	void Get_Current_Chapter_Monsters
-	(Monster_Type monster_Types[]) const;
+	void Get_Current_Chapter_Monsters(Monster_Type monster_Types[]) const;
+
+	Monster_Type Get_Random_Normal_Monster() const;
+
+	bool Check_Elite_Monster_Appearance() const;
 
 	void Add_Chapter_Score(int score_Reward);
 
