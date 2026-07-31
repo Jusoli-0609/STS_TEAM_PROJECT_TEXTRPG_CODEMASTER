@@ -1,72 +1,64 @@
-#include "Level_Up.h"
-#include "Player.h"
-#include <iostream>
+ï»¿#include "Level_Up.h"
+#include "Player.h" // Player ë©¤ë²„ í•¨ìˆ˜ ì ‘ê·¼ìš©
 
 using namespace std;
 
-// 1. _stat_points ÃÊ±âÈ­ Ãß°¡
 Level_Up::Level_Up()
-	: _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
+    : _current_level(1), _current_exp(0), _max_exp(100), _stat_points(0)
 {
 }
 
-// 2. ¼Ò¸êÀÚ ±¸ÇöºÎ Ãß°¡ (¡Ú ÀÌ ºÎºĞÀÌ ¾ø¾î¼­ LNK ¿À·ù°¡ ³­ °Í)
 Level_Up::~Level_Up()
 {
 }
 
-int Level_Up::GetCurrentLevel() const
-{
-	return _current_level;
-}
-
-int Level_Up::GetCurrentExp() const
-{
-	return _current_exp;
-}
-
-int Level_Up::GetMaxExp() const
-{
-	return _max_exp;
-}
-
 void Level_Up::GainExp(Player* player, int amount)
 {
-	if (player == nullptr || amount <= 0) return;
+    if (player == nullptr) return;
 
-	_current_exp += amount;
-	cout << "-> °æÇèÄ¡ +" << amount << " È¹µæ! (ÇöÀç °æÇèÄ¡: " << _current_exp << " / " << _max_exp << ")\n";
+    if (_current_level >= 10)
+    {
+        cout << "\n[!] ì´ë¯¸ ìµœê³  ë ˆë²¨(Lv.10)ì— ë„ë‹¬í•˜ì—¬ ë” ì´ìƒ ê²½í—˜ì¹˜ë¥¼ ì–»ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n";
+        return;
+    }
 
-	while (_current_exp >= _max_exp && _max_exp > 0)
-	{
-		LevelUpProcess(player);
-	}
+    _current_exp += amount;
+    cout << "  -> ê²½í—˜ì¹˜ +" << amount << " íšë“! (í˜„ì¬ ê²½í—˜ì¹˜: " << _current_exp << " / " << _max_exp << ")\n";
+
+    while (_current_exp >= _max_exp && _current_level < 10)
+    {
+        ProcessLevelUp(player);
+    }
 }
 
-void Level_Up::LevelUpProcess(Player* player)
+void Level_Up::ProcessLevelUp(Player* player)
 {
-	if (player == nullptr) return;
+    _current_exp -= _max_exp;
+    _current_level++;
+    _stat_points += 5;
 
-	_current_exp -= _max_exp;
+    cout << "\n====================================\n";
+    cout << "   â˜… LEVEL UP! (Lv." << _current_level - 1 << " -> Lv." << _current_level << ") â˜…\n";
+    cout << "====================================\n";
 
-	int prevLevel = _current_level;
-	_current_level++;
+    int addedHp = _current_level * 20;
+    int addedPower = _current_level * 5;
 
-	_max_exp = static_cast<int>(_max_exp * 1.5);
+    player->SetMaxHP(player->GetMaxHP() + addedHp);
+    player->SetPower(player->GetPower() + addedPower);
 
-	int hpBonus = 20;
-	int mpBonus = 10;
-	int powerBonus = 5;
-	int defenceBonus = 3;
+    cout << "  -> ë ˆë²¨ì—… ë³´ë„ˆìŠ¤: ìµœëŒ€ ì²´ë ¥ +" << addedHp << " (ìµœëŒ€ HP: " << player->GetMaxHP() << ")\n";
+    cout << "  -> ë ˆë²¨ì—… ë³´ë„ˆìŠ¤: ê³µê²©ë ¥ +" << addedPower << " (ê³µê²©ë ¥: " << player->GetPower() << ")\n";
 
-	player->setHp(player->getHp() + hpBonus);
-	player->setMp(player->getMp() + mpBonus);
-	player->setPower(player->getPower() + powerBonus);
-	player->setDefence(player->getDefence() + defenceBonus);
+    player->SetHP(player->GetMaxHP());
+    cout << "  -> ì²´ë ¥ì´ ìµœëŒ€ì¹˜ë¡œ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤! (í˜„ì¬ HP: " << player->GetHP() << ")\n";
 
-	cout << "\n¡Ú====================================¡Ú\n";
-	cout << "  [ ·¹º§ ¾÷! ] Lv." << prevLevel << " -> Lv." << _current_level << "\n";
-	cout << "  HP +" << hpBonus << ", MP +" << mpBonus
-		<< ", °ø°İ·Â +" << powerBonus << ", ¹æ¾î·Â +" << defenceBonus << " »ó½Â!\n";
-	cout << "¡Ú====================================¡Ú\n\n";
+    _max_exp = static_cast<int>(_max_exp * 1.5);
+
+    if (_current_level >= 10)
+    {
+        _current_exp = 0;
+        cout << "   â˜… ì¶•í•˜í•©ë‹ˆë‹¤! ìµœê³  ë ˆë²¨(Lv.10)ì— ë„ë‹¬í–ˆìŠµë‹ˆë‹¤! â˜…\n";
+    }
+    cout << "====================================\n\n";
 }

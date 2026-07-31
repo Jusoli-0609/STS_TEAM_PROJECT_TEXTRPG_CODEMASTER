@@ -1,5 +1,5 @@
 #pragma once
-#include "All_Recipes.h"
+#include "PotionRecipe.h"
 #include <vector>
 #include <string>
 #include <map>
