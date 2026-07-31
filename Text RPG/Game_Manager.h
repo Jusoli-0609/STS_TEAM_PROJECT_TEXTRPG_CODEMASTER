@@ -1,21 +1,28 @@
 #pragma once
 #include "Console_Manager.h"
 
-class GameManager
+class Game_Manager
 {
 private:
     Console_Manager Console;
 
+    bool IsRunning;
+
+private:
+    void Intro();
+    void Tutorial();
+
+    void Character_Creator();
+    //영빈님
+    void Job_Selection();
+    //영빈님
+
+    void Main_Menu();
+    //while 돌리기
+    void Ending();
+
 public:
-    // TODO: GameManager 생성자 선언
-    GameManager();
+    Game_Manager();
 
-    // TODO: 게임 초기화 함수 선언
-    void Init();
-
-    // TODO: 게임 실행 함수 선언
     void Run();
-
-    // TODO: 화면 출력 함수 선언
-    void Render();
 };

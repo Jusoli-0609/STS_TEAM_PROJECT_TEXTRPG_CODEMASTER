@@ -26,4 +26,6 @@ public:
    
     void Clear();
     //화면 초기화 함수
+
+    void Slow_Print(const std::string& Text, int DelayMs);
 };
