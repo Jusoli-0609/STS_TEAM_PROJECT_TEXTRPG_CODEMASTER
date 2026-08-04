@@ -255,7 +255,8 @@ void Dungeon_Manager::Run_Current_Chapter(Player* player, Inventory& inventory)
 		return;
 	}
 
-	Monster_Type random_Monster_Type = Get_Random_Normal_Monster();
+	Monster_Type 
+		random_Monster_Type = Get_Random_Normal_Monster();
 
 	Monster monster(random_Monster_Type);
 
